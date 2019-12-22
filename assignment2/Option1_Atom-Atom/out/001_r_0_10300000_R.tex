@@ -1,0 +1,18 @@
+\begin{tikzpicture}[remember picture, scale=\modGraphScale, baseline={([yshift={-0.5ex}]current bounding box)}, solid]
+\input{\modInputPrefix/out/000_r_0_coord.tex}
+\node[modStyleGraphVertex, at=(\modIdPrefix v-coord-0)] (\modIdPrefix v-0) {O};
+\node[modStyleGraphVertex, at=(\modIdPrefix v-coord-1)] (\modIdPrefix v-1) {C};
+\node[modStyleGraphVertex, at=(\modIdPrefix v-coord-2)] (\modIdPrefix v-2) {C};
+\node[modStyleGraphVertex, at=(\modIdPrefix v-coord-3)] (\modIdPrefix v-3) {O};
+\node[modStyleGraphVertex, at=(\modIdPrefix v-coord-4)] (\modIdPrefix v-4) {H};
+\node[modStyleGraphVertex, at=(\modIdPrefix v-coord-5)] (\modIdPrefix v-5) {H};
+\node[modStyleGraphVertex, at=(\modIdPrefix v-coord-6)] (\modIdPrefix v-6) {H};
+\node[modStyleGraphVertex, at=(\modIdPrefix v-coord-7)] (\modIdPrefix v-7) {H};
+\modDrawSingleBond{1}{0}{1}{1}{}{}
+\modDrawDoubleBond{2}{1}{1}{1}{Green, text=Green}{}
+\modDrawSingleBond{3}{2}{1}{1}{Green, text=Green}{}
+\modDrawSingleBond{4}{0}{1}{1}{}{}
+\modDrawSingleBond{5}{1}{1}{1}{}{}
+\modDrawSingleBond{7}{2}{1}{1}{}{}
+\modDrawSingleBond{6}{3}{1}{1}{Green, text=Green}{}
+\end{tikzpicture}

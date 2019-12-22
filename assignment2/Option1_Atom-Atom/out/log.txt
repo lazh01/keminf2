@@ -1,0 +1,14 @@
+Running VM ---------------------------------------------------------
+Executing code from 'test.py'
+Traceback (most recent call last):
+  File "out/input", line 58, in <module>
+    include("test.py")
+  File "out/input", line 48, in include
+    exec(code, globals())
+  File "test.py", line 1, in <module>
+    import pydoStuff
+ModuleNotFoundError: No module named 'pydoStuff'
+
+real	0m0.244s
+user	0m0.170s
+sys	0m0.004s
