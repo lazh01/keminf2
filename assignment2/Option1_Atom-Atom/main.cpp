@@ -101,6 +101,25 @@ std::vector<std::shared_ptr<mod::rule::Rule> > doStuff(const std::vector<std::sh
         //
         //
 
+	std::cout << "Educt graph:" << std::endl;
+	for(const auto v : asRange(vertices(gEduct))) {
+		std::cout << getVertexId(v, gEduct) << "\t\"" << pMolEduct[v] << "\"" << std::endl;
+		for(const auto e : asRange(out_edges(v, gEduct))) {
+			const auto t = target(e, gEduct);
+			std::cout << "\t\"" << pMolEduct[e] << "\"\t" << getVertexId(t, gEduct) << std::endl;
+		}
+	}
+
+	std::cout << "Product graph:" << std::endl;
+	for(const auto v : asRange(vertices(gProduct))) {
+		std::cout << getVertexId(v, gProduct) << "\t\"" << pMolProduct[v] << "\"" << std::endl;
+		for(const auto e : asRange(out_edges(v, gProduct))) {
+			const auto t = target(e, gProduct);
+			std::cout << "\t\"" << pMolProduct[e] << "\"\t" << getVertexId(t, gProduct) << std::endl;
+		}
+	}
+
+
 	std::vector<VertexMap> vertexMaps;
 	{ // this is example code and probably only works when the example graphs are loaded
 		VertexMap vertexMap;
