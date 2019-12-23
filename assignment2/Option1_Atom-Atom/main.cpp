@@ -103,7 +103,7 @@ std::vector<std::shared_ptr<mod::rule::Rule> > doStuff(const std::vector<std::sh
         //
         //
 		
-		map<auto, auto> EtoP;
+		std::map<auto, auto> EtoP;
 		for(const auto v : asRange(vertices(gEduct))) {
 			for(const auto j : asRange(vertices(gProduct))) {
 				if(pMolEduct[v] == pMolProduct[j]){
