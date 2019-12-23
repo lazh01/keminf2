@@ -103,14 +103,15 @@ std::vector<std::shared_ptr<mod::rule::Rule> > doStuff(const std::vector<std::sh
         //
         //
 		
-		std::map<auto, auto> EtoP;
+		std::map<int, int> EtoP;
 		for(const auto v : asRange(vertices(gEduct))) {
 			for(const auto j : asRange(vertices(gProduct))) {
 				if(pMolEduct[v] == pMolProduct[j]){
-					EtoP.insert(v,j);
+					EtoP.insert(getVertexId(v, gEduct), getVertexId(j, gProduct));
 					break;
 				}
 			}
+			break;
 		}
 
 
