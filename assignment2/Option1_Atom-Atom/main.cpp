@@ -103,7 +103,7 @@ std::vector<std::shared_ptr<mod::rule::Rule> > doStuff(const std::vector<std::sh
 
 	
 	
-	int *educts = asRange(vertices(gEducts));
+	auto educts = asRange(vertices(gEducts));
 	std::cout << "Educt graph:" << std::endl;
 	for(const int v : educts) {
 			std::cout << getVertexId(v, gEduct) << "\t\"" << pMolEduct[v] << "\"" << std::endl;
