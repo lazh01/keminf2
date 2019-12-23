@@ -111,15 +111,6 @@ std::vector<std::shared_ptr<mod::rule::Rule> > doStuff(const std::vector<std::sh
 					break;
 				}
 			}
-			map<auto, auto>::iterator itr; 
-    		cout << "\nThe map gquiz1 is : \n"; 
-    		cout << "\tKEY\tELEMENT\n"; 
-    		for (itr = EtoP.begin(); itr != EtoP.end(); ++itr) { 
-    		    cout << '\t' << itr->first 
-    		         << '\t' << itr->second << '\n'; 
-    		} 
-    		cout << endl;
-			break;
 		}
 
 
