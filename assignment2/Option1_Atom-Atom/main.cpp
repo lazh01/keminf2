@@ -101,10 +101,6 @@ std::vector<std::shared_ptr<mod::rule::Rule> > doStuff(const std::vector<std::sh
         //
         //
 
-	
-	
-	auto educts = asRange(vertices(gEducts));
-	std::cout << "Educt graph:" << std::endl;
 
 
 	std::vector<VertexMap> vertexMaps;
