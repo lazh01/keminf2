@@ -11,6 +11,8 @@
 #include <boost/bimap.hpp>
 
 #include <iostream>
+#include <map>
+#include <iterator>
 
 // import asRange which wraps a std::pair of iterators with a proxy class
 // to enable ADL of begin() and end(), so it can be used with ranged-based for loops
@@ -100,7 +102,25 @@ std::vector<std::shared_ptr<mod::rule::Rule> > doStuff(const std::vector<std::sh
         // WORK AREA: START
         //
         //
-
+		
+		map<auto, auto> EtoP;
+		for(const auto v : asRange(vertices(gEduct))) {
+			for(const auto j : asRange(vertices(gProduct))) {
+				if(pMolEduct[v] == pMolProduct[j]){
+					EtoP.insert(v,j);
+					break;
+				}
+			}
+			map<auto, auto>::iterator itr; 
+    		cout << "\nThe map gquiz1 is : \n"; 
+    		cout << "\tKEY\tELEMENT\n"; 
+    		for (itr = EtoP.begin(); itr != EtoP.end(); ++itr) { 
+    		    cout << '\t' << itr->first 
+    		         << '\t' << itr->second << '\n'; 
+    		} 
+    		cout << endl;
+			break;
+		}
 
 
 	std::vector<VertexMap> vertexMaps;
