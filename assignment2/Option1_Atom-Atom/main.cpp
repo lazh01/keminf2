@@ -115,11 +115,11 @@ std::vector<std::shared_ptr<mod::rule::Rule> > doStuff(const std::vector<std::sh
 		by following edges which do not corespond one should find the vertices in the cycle.
 		*/
 
-	/*
+	
 	std::map<int, int> EtoP;
 	std::map<int, int> PtoE;
-	Permutate(gEduct, gProduct, EtoP, PtoE);
-	*/
+	Permutate(gEduct, gProduct, &EtoP, &PtoE, &pMolEduct,&pMolProduct);
+	
 
 	
 	std::vector<VertexMap> vertexMaps;
@@ -416,6 +416,7 @@ std::unique_ptr<mod::lib::Rules::Real> createRule(const VertexMap &vertexMap,
 }
 template <typename ChemGraph>
 void validMap(std::set<int> *cycle, std::map<int, int> *EtoP, ChemGraph gEduct, ChemGraph gProduct){
+	return;
 	std::set<int>::iterator it;
 	std::vector<VertexMap> vertexMaps;
 	VertexMap vertexMap;
@@ -511,13 +512,14 @@ template <typename AutoTypes>
 //recursively finds possibly valid mappings from educt to product
 void Permutate(AutoTypes gEduct, AutoTypes gProduct, std::map<int, int> *EtoP, std::map<int, int> *PtoE, AutoTypes *pMolEduct, AutoTypes *pMolProduct){
 	if(num_vertices(gEduct == EtoP->size())){
-		verify(gEduct, gProduct, EtoP, PtoE);
+		//verify(gEduct, gProduct, EtoP, PtoE);
 	} else {
 		//Finds unmapped vertex from educt and maps it to an unmapped vertex from product with the same atom symbol
 		for(const auto v : asRange(vertices(gEduct))){
 			if(EtoP->find(getVertexId(v, gEduct)) == EtoP->end()){
 				for(const auto j : asRange(vertices(gProduct))) {
 					if(pMolEduct[v] == pMolProduct[j] && PtoE->find(j) == PtoE->end()){
+						std::cout << pMolProduct[j] << "\t\"" << pMolEduct[v] << "\"" << std::endl;
 						EtoP->insert(std::pair<int, int>(getVertexId(v, gEduct), getVertexId(j, gProduct)));
 						PtoE->insert(std::pair<int, int>(getVertexId(j, gProduct), getVertexId(v, gEduct)));
 						Permutate(gEduct, gProduct, EtoP, PtoE);
