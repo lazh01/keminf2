@@ -150,7 +150,7 @@ void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std:
 
 template <typename AutoTypes>
 //recursively finds possibly valid mappings from educt to product
-void Permutate(AutoTypes gEduct, AutoTypes gProduct, std::map<int, int> *EtoP, std::map<int, int> *PtoE, molList *pMolEduct, molList *pMolProduct){
+void Permutate(AutoTypes gEduct, AutoTypes gProduct, std::map<int, int> *EtoP, std::map<int, int> *PtoE, molList pMolEduct, molList pMolProduct){
 	if(num_vertices(gEduct == EtoP->size())){
 		//verify(gEduct, gProduct, EtoP, PtoE);
 	} else {
