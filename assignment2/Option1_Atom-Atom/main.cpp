@@ -81,10 +81,14 @@ void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std:
 		int vId= getVertexId(v, gEduct);
 		for(const auto e : asRange(out_edges(v, gEduct))) {
 			const auto t = target(e, gEduct);
+			if(Oedges.find(vId) != Oedges.end()){
+				return;
+			}
 			Oedges.insert(std::pair<int, int>(getVertexId(v, gEduct), getVertexId(t, gEduct)));
 			for(const auto ep : asRange(out_edges(getVertexFromId(EtoP->find(vId)->second, gProduct), gProduct))) {
 				const auto tp = target(ep, gProduct);
 				if(PtoE->find(getVertexId(tp, gProduct))->second == getVertexId(t, gEduct)){
+					std::cout << bondValue(e) << "\t\"" << bondValue(ep) << "\"" << std::endl;
 					if( bondValue(e) < bondValue(ep)){
 						Oedges.erase(vId);
 					}
@@ -97,6 +101,9 @@ void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std:
 		int vId= getVertexId(v, gProduct);
 		for(const auto e : asRange(out_edges(v, gProduct))) {
 			const auto t = target(e, gProduct);
+			if(Xedges.find(vId) != Xedges.end()){
+				return;
+			}
 			Xedges.insert(std::pair<int, int>(PtoE->find(getVertexId(v, gProduct))->second, PtoE->find(getVertexId(t, gProduct))->second));
 			for(const auto ep : asRange(out_edges(getVertexFromId(PtoE->find(vId)->second, gEduct), gEduct))) {
 				const auto tp = target(ep, gEduct);
@@ -159,7 +166,7 @@ void Permutate(AutoTypes gEduct, AutoTypes gProduct, std::map<int, int> *EtoP, s
 			if(EtoP->find(getVertexId(v, gEduct)) == EtoP->end()){
 				for(const auto j : asRange(vertices(gProduct))) {
 					if((pMolEduct[v] == pMolProduct[j]) && (PtoE->find(getVertexId(j, gProduct)) == PtoE->end())){
-						std::cout << pMolProduct[j] << "\t\"" << pMolEduct[v] << "\"" << std::endl;
+						//std::cout << pMolProduct[j] << "\t\"" << pMolEduct[v] << "\"" << std::endl;
 						EtoP->insert(std::pair<int, int>(getVertexId(v, gEduct), getVertexId(j, gProduct)));
 						PtoE->insert(std::pair<int, int>(getVertexId(j, gProduct), getVertexId(v, gEduct)));
 						Permutate(gEduct, gProduct, EtoP, PtoE, pMolEduct, pMolProduct);
