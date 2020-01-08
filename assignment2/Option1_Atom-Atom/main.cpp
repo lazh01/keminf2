@@ -90,7 +90,7 @@ int edgeValue(Edge edge, molList pMol){
 }
 */
 template <typename ChemGraph>
-void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std::map<int, int> *PtoE, molList pMolEduct, molList pMolProduct, VertexMap *vertexMap, std::vector<VertexMap> *vertexMaps)
+std::set<int> *verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std::map<int, int> *PtoE, molList pMolEduct, molList pMolProduct, VertexMap *vertexMap, std::vector<VertexMap> *vertexMaps)
 {
 	std::map<int, int> Oedges;
 	std::map<int, int> Xedges;
@@ -240,13 +240,9 @@ template <typename AutoTypes>
 //recursively finds possibly valid mappings from educt to product
 void Permutate(AutoTypes gEduct, AutoTypes gProduct, std::map<int, int> *EtoP, std::map<int, int> *PtoE, molList pMolEduct, molList pMolProduct, VertexMap *vertexMap, std::vector<VertexMap> *vertexMaps)
 {
-	if (num_vertices(gEduct) == EtoP->size())
-	{
-		verify(gEduct, gProduct, EtoP, PtoE, pMolEduct, pMolProduct, vertexMap, vertexMaps);
-	}
-	else
-	{
 		//Finds unmapped vertex from educt and maps it to an unmapped vertex from product with the same atom symbol
+		std::set<int> *check;
+		std::set<int>::iterator it;
 		for (const auto v : asRange(vertices(gEduct)))
 		{
 			if (EtoP->find(getVertexId(v, gEduct)) == EtoP->end())
@@ -255,17 +251,31 @@ void Permutate(AutoTypes gEduct, AutoTypes gProduct, std::map<int, int> *EtoP, s
 				{
 					if ((pMolEduct[v] == pMolProduct[j]) && (PtoE->find(getVertexId(j, gProduct)) == PtoE->end()))
 					{
+						int i = 0;
+						for( it = check->begin(); i != check->size(); ++it){
+							if(EtoP->find(*it) != EtoP->end()){
+								i = i+1;
+							}
+						}
+						if((i == check->size()) && (check->size() > 0)){
+							return;
+						} else if (check->size() > i){
+							check = std::set<int> b;
+						}
 						//std::cout << pMolProduct[j] << "\t\"" << pMolEduct[v] << "\"" << std::endl;
 						EtoP->insert(std::pair<int, int>(getVertexId(v, gEduct), getVertexId(j, gProduct)));
 						PtoE->insert(std::pair<int, int>(getVertexId(j, gProduct), getVertexId(v, gEduct)));
-						Permutate(gEduct, gProduct, EtoP, PtoE, pMolEduct, pMolProduct, vertexMap, vertexMaps);
+						if(num_vertices(gEduct) == EtoP->size()){
+							check = verify(gEduct, gProduct, EtoP, PtoE, pMolEduct, pMolProduct, vertexMap, vertexMaps);
+						} else {
+							Permutate(gEduct, gProduct, EtoP, PtoE, pMolEduct, pMolProduct, vertexMap, vertexMaps);
+						}
 						EtoP->erase(getVertexId(v, gEduct));
 						PtoE->erase(getVertexId(j, gProduct));
 					}
 				}
 			}
 		}
-	}
 }
 
 std::vector<std::shared_ptr<mod::rule::Rule>> doStuff(const std::vector<std::shared_ptr<mod::graph::Graph>> &educts,
