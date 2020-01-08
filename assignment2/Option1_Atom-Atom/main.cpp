@@ -155,13 +155,13 @@ void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std:
 
 	for (const auto v : asRange(vertices(gProduct)))
 	{
-		int vId = getVertexId(v, gProduct);
+		int vId = PtoE.find(getVertexId(v, gProduct))->second;
 		for (const auto e : asRange(out_edges(v, gProduct)))
 		{
 			const auto t = target(e, gProduct);
 			if (Xedges.find(vId) != Xedges.end())
 			{
-				for (const auto ep : asRange(out_edges(getVertexFromId(PtoE->find(vId)->second, gEduct), gEduct)))
+				for (const auto ep : asRange(out_edges(getVertexFromId(vId, gEduct), gEduct)))
 				{
 					const auto tp = target(ep, gEduct);
 					if (EtoP->find(getVertexId(tp, gEduct))->second == getVertexId(t, gProduct))
@@ -175,7 +175,7 @@ void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std:
 			}
 			else
 			{
-				Xedges.insert(std::pair<int, int>(PtoE->find(getVertexId(v, gProduct))->second, PtoE->find(getVertexId(t, gProduct))->second));
+				Xedges.insert(std::pair<int, int>(vId, PtoE->find(getVertexId(t, gProduct))->second));
 				for (const auto ep : asRange(out_edges(getVertexFromId(PtoE->find(vId)->second, gEduct), gEduct)))
 				{
 					const auto tp = target(ep, gEduct);
@@ -183,7 +183,7 @@ void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std:
 					{
 						if (bondValue(pMolProduct[e]) <= bondValue(pMolEduct[ep]))
 						{
-							Xedges.erase(PtoE->find(vId)->second);
+							Xedges.erase(vId);
 						}
 					}
 				}
