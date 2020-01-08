@@ -27,6 +27,6 @@ g2 = smiles("C=C")
 g3 = smiles("C1CCC1")
 c = 4
 k = 0
-res = doStuff([g1, g2], [g3], c, k)
+res = doStuff([g1, g2], [g3])
 for a in res:
 	a.print()
