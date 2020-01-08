@@ -414,8 +414,8 @@ std::unique_ptr<mod::lib::Rules::Real> createRule(const VertexMap &vertexMap,
 
 	return std::make_unique<mod::lib::Rules::Real>(std::move(dpoRule), boost::none);
 }
-template <typename gt>
-void validMap(std::set<int> *cycle, std::map<int, int> *EtoP, gt gEduct, gt gProduct){
+template <typename ChemGraph>
+void validMap(std::set<int> *cycle, std::map<int, int> *EtoP, ChemGraph gEduct, ChemGraph gProduct){
 	std::set<int>::iterator it;
 	std::vector<VertexMap> vertexMaps;
 	VertexMap vertexMap;
