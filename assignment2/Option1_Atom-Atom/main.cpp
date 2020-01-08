@@ -241,10 +241,10 @@ void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std:
 	{
 		//std::cout << "valid mapping" << std::endl;
 		for(int i = k; i != 0; i--){
-			for (it = cycle->begin(); it != cycle->end(); ++it)
+			for (it = cycle.begin(); it != cycle.end(); ++it)
 			{
 				for (const auto e : asRange(out_edges(*it, gEduct))){
-					t = target(e, gEduct);
+					const auto t = target(e, gEduct);
 					nextk.insert(getVertexId(t, gEduct));
 				}
 			}
