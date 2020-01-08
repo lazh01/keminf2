@@ -191,9 +191,6 @@ void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std:
 		}
 	}
 
-	std::cout << "hier" << std::endl;
-	std::cout << Oedges.size() << Xedges.size() << std::endl;
-
 	if (Oedges.size() != Xedges.size())
 	{
 		return;
