@@ -98,7 +98,7 @@ void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std:
 {
 	std::map<int, int> Oedges;
 	std::map<int, int> Xedges;
-
+	std::map<int, int>::iterator it;
 	std::cout << "EtoP" << '\n';
 
 	for (it=EtoP->begin(); it!=EtoP->end(); ++it){
