@@ -271,9 +271,9 @@ void Permutate(AutoTypes gEduct, AutoTypes gProduct, std::map<int, int> *EtoP, s
 						EtoP->insert(std::pair<int, int>(getVertexId(v, gEduct), getVertexId(j, gProduct)));
 						PtoE->insert(std::pair<int, int>(getVertexId(j, gProduct), getVertexId(v, gEduct)));
 						if(num_vertices(gEduct) == EtoP->size()){
-							std::cout << "asasas" << std::endl;
+							/*std::cout << "asasas" << std::endl;
 							check = verify(gEduct, gProduct, EtoP, PtoE, pMolEduct, pMolProduct, vertexMap, vertexMaps);
-							std::cout << "laaaaa" << std::endl;
+							std::cout << "laaaaa" << std::endl;*/
 						} else {
 							Permutate(gEduct, gProduct, EtoP, PtoE, pMolEduct, pMolProduct, vertexMap, vertexMaps);
 						}
