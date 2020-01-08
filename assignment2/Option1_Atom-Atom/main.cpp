@@ -126,7 +126,7 @@ void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std:
 					const auto tp = target(ep, gProduct);
 					if (PtoE->find(getVertexId(tp, gProduct))->second == getVertexId(t, gEduct))
 					{
-						if (bondValue(pMolEduct[e]) <= bondValue(pMolProduct[ep]))
+						if (bondValue(pMolEduct[e]) > bondValue(pMolProduct[ep]))
 						{
 							return;
 						}
@@ -166,7 +166,7 @@ void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std:
 					const auto tp = target(ep, gEduct);
 					if (EtoP->find(getVertexId(tp, gEduct))->second == getVertexId(t, gProduct))
 					{
-						if (bondValue(pMolProduct[e]) <= bondValue(pMolEduct[ep]))
+						if (bondValue(pMolProduct[e]) > bondValue(pMolEduct[ep]))
 						{
 							return;
 						}
@@ -340,6 +340,7 @@ std::vector<std::shared_ptr<mod::rule::Rule>> doStuff(const std::vector<std::sha
 
 	std::map<int, int> EtoP;
 	std::map<int, int> PtoE;
+	
 	Permutate(gEduct, gProduct, &EtoP, &PtoE, pMolEduct, pMolProduct);
 
 	std::vector<VertexMap> vertexMaps;
