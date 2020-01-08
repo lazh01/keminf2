@@ -76,8 +76,8 @@ template <typename ChemGraph>
 void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std::map<int, int> *PtoE){
 	std::map<int, int> Oedges;
 	std::map<int, int> Xedges;
-	
 	for(const auto v : asRange(vertices(gEduct))){
+		std::cout << "..";
 		int vId= getVertexId(v, gEduct);
 		for(const auto e : asRange(out_edges(v, gEduct))) {
 			const auto t = target(e, gEduct);
@@ -95,6 +95,8 @@ void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std:
 				}
 			}
 		}
+
+		std::cout << std::endl;
 	}
 
 	for(const auto v : asRange(vertices(gProduct))){
