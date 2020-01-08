@@ -162,7 +162,7 @@ void Permutate(AutoTypes gEduct, AutoTypes gProduct, std::map<int, int> *EtoP, s
 						std::cout << pMolProduct[j] << "\t\"" << pMolEduct[v] << "\"" << std::endl;
 						EtoP->insert(std::pair<int, int>(getVertexId(v, gEduct), getVertexId(j, gProduct)));
 						PtoE->insert(std::pair<int, int>(getVertexId(j, gProduct), getVertexId(v, gEduct)));
-						Permutate(gEduct, gProduct, EtoP, PtoE, pMolEduct, pMolProduct));
+						Permutate(gEduct, gProduct, EtoP, PtoE, pMolEduct, pMolProduct);
 						EtoP->erase(getVertexId(v, gEduct));
 						PtoE->erase(getVertexId(j, gProduct));
 					}
@@ -237,7 +237,7 @@ std::vector<std::shared_ptr<mod::rule::Rule> > doStuff(const std::vector<std::sh
 	
 	std::map<int, int> EtoP;
 	std::map<int, int> PtoE;
-	Permutate(gEduct, gProduct, &EtoP, &PtoE, pMolEduct, pMolProduct);
+	Permutate(gEduct, gProduct, EtoP, PtoE, pMolEduct, pMolProduct);
 	
 
 	
