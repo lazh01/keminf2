@@ -12,7 +12,7 @@ if modValue != ourValue:
 
 # make doStuff a bit more friendly to use
 _doStuff_orig = pydoStuff.doStuff
-def _doStuff(educts, products, c, k):
+def _doStuff(educts, products, int c, int k):
 	return mod._unwrap(_doStuff_orig(
 		mod._wrap(mod.VecGraph, educts),
 		mod._wrap(mod.VecGraph, products)))
