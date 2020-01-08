@@ -242,7 +242,7 @@ template <typename AutoTypes>
 //recursively finds possibly valid mappings from educt to product
 void Permutate(AutoTypes gEduct, AutoTypes gProduct, std::map<int, int> *EtoP, std::map<int, int> *PtoE, molList pMolEduct, molList pMolProduct, VertexMap *vertexMap, std::vector<VertexMap> *vertexMaps, std::list<vert> *listv)
 {
-	if (listv->size() == 0)
+	if (num_vertices(gEduct) == EtoP->size())
 	{
 		verify(gEduct, gProduct, EtoP, PtoE, pMolEduct, pMolProduct, vertexMap, vertexMaps);
 	}
