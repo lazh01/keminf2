@@ -237,7 +237,7 @@ std::vector<std::shared_ptr<mod::rule::Rule> > doStuff(const std::vector<std::sh
 	
 	std::map<int, int> EtoP;
 	std::map<int, int> PtoE;
-	Permutate(gEduct, gProduct, EtoP, PtoE, pMolEduct, pMolProduct);
+	Permutate(gEduct, gProduct, &EtoP, &PtoE, pMolEduct, pMolProduct);
 	
 
 	
