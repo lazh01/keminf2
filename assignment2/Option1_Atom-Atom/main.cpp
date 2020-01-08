@@ -28,7 +28,7 @@ using AtomData = mod::AtomData;
 using BondType = mod::BondType;
 using PropString = mod::lib::Graph::LabelledGraph::PropStringType;
 using MolView = mod::lib::Graph::PropMolecule;
-using molList = mod::lib::detail::UnionPropMolecule<mod::lib::Graph::LabelledGraph>
+using molList = mod::lib::detail::UnionPropMolecule<mod::lib::Graph::LabelledGraph>;
 using mod::lib::Chem::bondToChar;
 
 std::unique_ptr<mod::lib::Rules::Real> createRule(const VertexMap &vertexMap,
