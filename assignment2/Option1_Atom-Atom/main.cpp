@@ -227,7 +227,7 @@ void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std:
 		count = count + 1;
 	}
 
-	if (first == current)
+	if ((first == current) && (count % 2 == 0))
 	{
 		//std::cout << "valid mapping" << std::endl;
 		validMap(&cycle, EtoP, gEduct, gProduct, vertexMap, vertexMaps);
