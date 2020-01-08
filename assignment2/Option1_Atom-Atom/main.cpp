@@ -30,6 +30,7 @@ using BondType = mod::BondType;
 using PropString = mod::lib::Graph::LabelledGraph::PropStringType;
 using MolView = mod::lib::Graph::PropMolecule;
 using molList = mod::lib::detail::UnionPropMolecule<mod::lib::Graph::LabelledGraph>;
+using vert = jla_boost::union_graph<jla_boost::EdgeIndexedAdjacencyList<boost::undirectedS> >::vertex_descriptor;
 using mod::lib::Chem::bondToChar;
 
 std::unique_ptr<mod::lib::Rules::Real> createRule(const VertexMap &vertexMap,
@@ -250,7 +251,6 @@ void Permutate(AutoTypes gEduct, AutoTypes gProduct, std::map<int, int> *EtoP, s
 		//Finds unmapped vertex from educt and maps it to an unmapped vertex from product with the same atom symbol
 		for (const auto v : asRange(vertices(gEduct)))
 		{	
-			v.ast();
 			if (EtoP->find(getVertexId(v, gEduct)) == EtoP->end())
 			{
 				for (const auto j : asRange(vertices(gProduct)))
@@ -343,6 +343,7 @@ std::vector<std::shared_ptr<mod::rule::Rule>> doStuff(const std::vector<std::sha
 			vertexMap.insert(
 				VertexMap::value_type(getVertexFromId(idEduct, gEduct), getVertexFromId(idProduct, gProduct)));
 		};
+	std::list<vert> listv;
 	Permutate(gEduct, gProduct, &EtoP, &PtoE, pMolEduct, pMolProduct, &vertexMap, &vertexMaps);
 
 	/*
