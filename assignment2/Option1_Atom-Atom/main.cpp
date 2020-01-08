@@ -94,6 +94,7 @@ std::set<int> *verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *
 {
 	std::set<int> *cycle;
 	std::set<int> *ret;
+
 	std::map<int, int> Oedges;
 	std::map<int, int> Xedges;
 	/*std::map<int, int>::iterator it;
@@ -271,9 +272,9 @@ void Permutate(AutoTypes gEduct, AutoTypes gProduct, std::map<int, int> *EtoP, s
 						EtoP->insert(std::pair<int, int>(getVertexId(v, gEduct), getVertexId(j, gProduct)));
 						PtoE->insert(std::pair<int, int>(getVertexId(j, gProduct), getVertexId(v, gEduct)));
 						if(num_vertices(gEduct) == EtoP->size()){
-							/*std::cout << "asasas" << std::endl;
-							check = verify(gEduct, gProduct, EtoP, PtoE, pMolEduct, pMolProduct, vertexMap, vertexMaps);
-							std::cout << "laaaaa" << std::endl;*/
+							std::cout << "asasas" << std::endl;
+							//check = verify(gEduct, gProduct, EtoP, PtoE, pMolEduct, pMolProduct, vertexMap, vertexMaps);
+							std::cout << "laaaaa" << std::endl;
 						} else {
 							Permutate(gEduct, gProduct, EtoP, PtoE, pMolEduct, pMolProduct, vertexMap, vertexMaps);
 						}
