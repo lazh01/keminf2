@@ -415,9 +415,7 @@ std::unique_ptr<mod::lib::Rules::Real> createRule(const VertexMap &vertexMap,
 	return std::make_unique<mod::lib::Rules::Real>(std::move(dpoRule), boost::none);
 }
 
-template <typename gt>
-
-void validMap(std::set<int> cycle, std::map<int, int> &EtoP, gt gEduct, gt gProduct){
+void validMap(std::set<int> cycle, std::map<int, int> *EtoP, gt gEduct, gt gProduct){
 	std::set<int>::iterator it;
 	std::vector<VertexMap> vertexMaps;
 	VertexMap vertexMap;
@@ -433,7 +431,7 @@ void validMap(std::set<int> cycle, std::map<int, int> &EtoP, gt gEduct, gt gProd
 	vertexMap.clear();
 }
 
-void verify(gt gEduct, gt gProduct, std::map<int, int> &EtoP, std::map<int, int> &PtoE){
+void verify(gt gEduct, gt gProduct, std::map<int, int> *EtoP, std::map<int, int> *PtoE){
 	std::map<int, int> Oedges;
 	std::map<int, int> Xedges;
 	
@@ -509,7 +507,7 @@ void verify(gt gEduct, gt gProduct, std::map<int, int> &EtoP, std::map<int, int>
 }
 
 //recursively finds possibly valid mappings from educt to product
-void Permutate(gt gEduct, gt gProduct, std::map<int, int> &EtoP, std::map<int, int> &PtoE){
+void Permutate(gt gEduct, gt gProduct, std::map<int, int> *EtoP, std::map<int, int> *PtoE){
 	if(num_vertices(gEduct == EtoP.size())){
 		verify(gEduct, gProduct, EtoP, PtoE);
 	} else {
