@@ -66,6 +66,10 @@ template <typename ChemGraph>
 void validMap(std::set<int> *cycle, std::map<int, int> *EtoP, ChemGraph gEduct, ChemGraph gProduct, VertexMap vertexMap, std::vector<VertexMap> vertexMaps)
 {
 	std::set<int>::iterator it;
+	auto setById = [&vertexMap, &gEduct, &gProduct](std::size_t idEduct, std::size_t idProduct) {
+			vertexMap.insert(
+				VertexMap::value_type(getVertexFromId(idEduct, gEduct), getVertexFromId(idProduct, gProduct)));
+		};
 	for (it = cycle->begin(); it != cycle->end(); ++it)
 	{
 		setById(*it, EtoP->find(*it)->second);
@@ -86,7 +90,7 @@ int edgeValue(Edge edge, molList pMol){
 }
 */
 template <typename ChemGraph>
-void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std::map<int, int> *PtoE, molList pMolEduct, molList pMolProduct, VertexMap vertexmap, std::vector<VertexMap> vertexMaps)
+void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std::map<int, int> *PtoE, molList pMolEduct, molList pMolProduct, VertexMap vertexMap, std::vector<VertexMap> vertexMaps)
 {
 	std::map<int, int> Oedges;
 	std::map<int, int> Xedges;
