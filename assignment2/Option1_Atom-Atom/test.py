@@ -16,8 +16,8 @@ def _doStuff(educts, products, c, k):
 	return mod._unwrap(_doStuff_orig(
 		mod._wrap(mod.VecGraph, educts),
 		mod._wrap(mod.VecGraph, products),
-		int,
-		int))
+		mod._wrap(mod.int, c),
+		mod._wrap(mod.int, k)))
 pydoStuff.doStuff = _doStuff
 doStuff = _doStuff
 # end of friendlyfier code
