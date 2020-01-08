@@ -67,7 +67,7 @@ void validMap(std::set<int> *cycle, std::map<int, int> *EtoP, ChemGraph gEduct, 
 {
 	std::set<int>::iterator it;
 	auto setById = [&vertexMap, &gEduct, &gProduct](std::size_t idEduct, std::size_t idProduct) {
-			vertexMap.insert(
+			vertexMap->insert(
 				VertexMap::value_type(getVertexFromId(idEduct, gEduct), getVertexFromId(idProduct, gProduct)));
 		};
 	for (it = cycle->begin(); it != cycle->end(); ++it)
