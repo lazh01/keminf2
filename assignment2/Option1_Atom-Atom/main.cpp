@@ -155,7 +155,7 @@ void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std:
 
 	for (const auto v : asRange(vertices(gProduct)))
 	{
-		int vId = PtoE.find(getVertexId(v, gProduct))->second;
+		int vId = PtoE->find(getVertexId(v, gProduct))->second;
 		for (const auto e : asRange(out_edges(v, gProduct)))
 		{
 			const auto t = target(e, gProduct);
