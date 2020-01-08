@@ -162,7 +162,7 @@ template <typename AutoTypes>
 //recursively finds possibly valid mappings from educt to product
 void Permutate(AutoTypes gEduct, AutoTypes gProduct, std::map<int, int> *EtoP, std::map<int, int> *PtoE, molList pMolEduct, molList pMolProduct){
 	if(num_vertices(gEduct) == EtoP->size()){
-		//verify(gEduct, gProduct, EtoP, PtoE);
+		verify(gEduct, gProduct, EtoP, PtoE);
 	} else {
 		//Finds unmapped vertex from educt and maps it to an unmapped vertex from product with the same atom symbol
 		for(const auto v : asRange(vertices(gEduct))){
