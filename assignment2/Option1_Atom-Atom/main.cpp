@@ -233,13 +233,13 @@ void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std:
 	if (first == current)
 	{
 		//std::cout << "valid mapping" << std::endl;
-		validMap(cycle, EtoP, gEduct, gProduct);
+		//validMap(cycle, EtoP, gEduct, gProduct);
 	}
 }
 
 template <typename AutoTypes>
 //recursively finds possibly valid mappings from educt to product
-void Permutate(AutoTypes gEduct, AutoTypes gProduct, std::map<int, int> *EtoP, std::map<int, int> *PtoE, molList pMolEduct, molList pMolProduct)
+void Permutate(AutoTypes gEduct, AutoTypes gProduct, std::map<int, int> *EtoP, std::map<int, int> *PtoE, molList pMolEduct, molList pMolProduct, VertexMap vertexmap)
 {
 	if (num_vertices(gEduct) == EtoP->size())
 	{
@@ -259,7 +259,7 @@ void Permutate(AutoTypes gEduct, AutoTypes gProduct, std::map<int, int> *EtoP, s
 						//std::cout << pMolProduct[j] << "\t\"" << pMolEduct[v] << "\"" << std::endl;
 						EtoP->insert(std::pair<int, int>(getVertexId(v, gEduct), getVertexId(j, gProduct)));
 						PtoE->insert(std::pair<int, int>(getVertexId(j, gProduct), getVertexId(v, gEduct)));
-						Permutate(gEduct, gProduct, EtoP, PtoE, pMolEduct, pMolProduct);
+						Permutate(gEduct, gProduct, EtoP, PtoE, pMolEduct, pMolProduct, vertexmap);
 						EtoP->erase(getVertexId(v, gEduct));
 						PtoE->erase(getVertexId(j, gProduct));
 					}
@@ -336,10 +336,15 @@ std::vector<std::shared_ptr<mod::rule::Rule>> doStuff(const std::vector<std::sha
 
 	std::map<int, int> EtoP;
 	std::map<int, int> PtoE;
-	
-	Permutate(gEduct, gProduct, &EtoP, &PtoE, pMolEduct, pMolProduct);
-
 	std::vector<VertexMap> vertexMaps;
+	VertexMap vertexMap;
+	auto setById = [&vertexMap, &gEduct, &gProduct](std::size_t idEduct, std::size_t idProduct) {
+			vertexMap.insert(
+				VertexMap::value_type(getVertexFromId(idEduct, gEduct), getVertexFromId(idProduct, gProduct)));
+		};
+	Permutate(gEduct, gProduct, &EtoP, &PtoE, pMolEduct, pMolProduct, vertexMap);
+
+	/*
 	{ // this is example code and probably only works when the example graphs are loaded
 		VertexMap vertexMap;
 		auto setById = [&vertexMap, &gEduct, &gProduct](std::size_t idEduct, std::size_t idProduct) {
@@ -367,7 +372,7 @@ std::vector<std::shared_ptr<mod::rule::Rule>> doStuff(const std::vector<std::sha
 		setById(6, 4);
 		vertexMaps.push_back(vertexMap);
 	}
-
+	*/
 	// WORK AREA: END
 	//
 	//
