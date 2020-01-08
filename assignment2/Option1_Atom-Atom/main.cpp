@@ -63,7 +63,7 @@ int bondValue(BondType bt)
 }
 
 template <typename ChemGraph>
-void validMap(std::set<int> *cycle, std::map<int, int> *EtoP, ChemGraph gEduct, ChemGraph gProduct, VertexMap vertexMap, std::vector<VertexMap> vertexMaps)
+void validMap(std::set<int> *cycle, std::map<int, int> *EtoP, ChemGraph gEduct, ChemGraph gProduct, VertexMap *vertexMap, std::vector<VertexMap> *vertexMaps)
 {
 	std::set<int>::iterator it;
 	auto setById = [&vertexMap, &gEduct, &gProduct](std::size_t idEduct, std::size_t idProduct) {
@@ -74,8 +74,8 @@ void validMap(std::set<int> *cycle, std::map<int, int> *EtoP, ChemGraph gEduct, 
 	{
 		setById(*it, EtoP->find(*it)->second);
 	}
-	vertexMaps.push_back(vertexMap);
-	vertexMap.clear();
+	vertexMaps->push_back(*vertexMap);
+	vertexMap->clear();
 }
 /*
 template<typename Edge>
@@ -90,7 +90,7 @@ int edgeValue(Edge edge, molList pMol){
 }
 */
 template <typename ChemGraph>
-void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std::map<int, int> *PtoE, molList pMolEduct, molList pMolProduct, VertexMap vertexMap, std::vector<VertexMap> vertexMaps)
+void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std::map<int, int> *PtoE, molList pMolEduct, molList pMolProduct, VertexMap *vertexMap, std::vector<VertexMap> *vertexMaps)
 {
 	std::map<int, int> Oedges;
 	std::map<int, int> Xedges;
@@ -236,7 +236,7 @@ void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std:
 
 template <typename AutoTypes>
 //recursively finds possibly valid mappings from educt to product
-void Permutate(AutoTypes gEduct, AutoTypes gProduct, std::map<int, int> *EtoP, std::map<int, int> *PtoE, molList pMolEduct, molList pMolProduct, VertexMap vertexMap, std::vector<VertexMap> vertexMaps)
+void Permutate(AutoTypes gEduct, AutoTypes gProduct, std::map<int, int> *EtoP, std::map<int, int> *PtoE, molList pMolEduct, molList pMolProduct, VertexMap *vertexMap, std::vector<VertexMap> *vertexMaps)
 {
 	if (num_vertices(gEduct) == EtoP->size())
 	{
@@ -339,7 +339,7 @@ std::vector<std::shared_ptr<mod::rule::Rule>> doStuff(const std::vector<std::sha
 			vertexMap.insert(
 				VertexMap::value_type(getVertexFromId(idEduct, gEduct), getVertexFromId(idProduct, gProduct)));
 		};
-	Permutate(gEduct, gProduct, &EtoP, &PtoE, pMolEduct, pMolProduct, vertexMap, vertexMaps);
+	Permutate(gEduct, gProduct, &EtoP, &PtoE, pMolEduct, pMolProduct, &vertexMap, &vertexMaps);
 
 	/*
 	{ // this is example code and probably only works when the example graphs are loaded
