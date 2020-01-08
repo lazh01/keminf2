@@ -257,7 +257,7 @@ void Permutate(AutoTypes gEduct, AutoTypes gProduct, std::map<int, int> *EtoP, s
 					if ((pMolEduct[v] == pMolProduct[j]) && (PtoE->find(getVertexId(j, gProduct)) == PtoE->end()))
 					{
 						int i = 0;
-						for( it = check->begin(); it != check->size(); ++it){
+						for( it = check->begin(); it != check->end(); ++it){
 							if(EtoP->find(*it) != EtoP->end()){
 								i = i+1;
 							}
