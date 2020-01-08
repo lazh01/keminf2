@@ -90,8 +90,9 @@ int edgeValue(Edge edge, molList pMol){
 }
 */
 template <typename ChemGraph>
-std::set<int> *verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std::map<int, int> *PtoE, molList pMolEduct, molList pMolProduct, VertexMap *vertexMap, std::vector<VertexMap> *vertexMaps, std::set<int> *cycle)
+std::set<int> *verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std::map<int, int> *PtoE, molList pMolEduct, molList pMolProduct, VertexMap *vertexMap, std::vector<VertexMap> *vertexMaps)
 {
+	std::set<int> *cycle;
 	std::set<int> *ret;
 
 	std::map<int, int> Oedges;
@@ -126,7 +127,7 @@ std::set<int> *verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *
 					{
 						if (bondValue(pMolEduct[e]) > bondValue(pMolProduct[ep]))
 						{
-							return NULL;
+							return ret;
 						}
 					}
 				}
@@ -166,7 +167,7 @@ std::set<int> *verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *
 					{
 						if (bondValue(pMolProduct[e]) > bondValue(pMolEduct[ep]))
 						{
-							return NULL;
+							return ret;
 						}
 					}
 				}
@@ -191,7 +192,7 @@ std::set<int> *verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *
 
 	if (Oedges.size() != Xedges.size())
 	{
-		return NULL;
+		return ret;
 	}
 
 	int first = Oedges.begin()->first;
@@ -208,7 +209,7 @@ std::set<int> *verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *
 		{
 			if (Xedges.find(current) == Xedges.end())
 			{
-				return NULL;
+				return ret;
 			}
 			tmp = Xedges.find(current)->second;
 			Xedges.erase(current);
@@ -219,7 +220,7 @@ std::set<int> *verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *
 		{
 			if (Oedges.find(current) == Oedges.end())
 			{
-				return NULL;
+				return ret;
 			}
 			tmp = Oedges.find(current)->second;
 			Oedges.erase(current);
@@ -236,7 +237,7 @@ std::set<int> *verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *
 		validMap(cycle, EtoP, gEduct, gProduct, vertexMap, vertexMaps);
 		return cycle;
 	}
-	return NULL;
+	return ret;
 }
 
 template <typename AutoTypes>
@@ -256,9 +257,8 @@ void Permutate(AutoTypes gEduct, AutoTypes gProduct, std::map<int, int> *EtoP, s
 				{
 					if ((pMolEduct[v] == pMolProduct[j]) && (PtoE->find(getVertexId(j, gProduct)) == PtoE->end()))
 					{
-						if(check != NULL){
 						int i = 0;
-						for( it = check->begin(); it != check->end(); ++it){
+						/*for( it = check->begin(); it != check->end(); ++it){
 							if(EtoP->find(*it) != EtoP->end()){
 								i = i+1;
 							}
@@ -266,15 +266,14 @@ void Permutate(AutoTypes gEduct, AutoTypes gProduct, std::map<int, int> *EtoP, s
 						if((i == check->size()) && (check->size() > 0)){
 							return;
 						} else if (check->size() > i){
-							check = NULL;
-						}
-						}
+							check = &empty;
+						}*/
 						//std::cout << pMolProduct[j] << "\t\"" << pMolEduct[v] << "\"" << std::endl;
 						EtoP->insert(std::pair<int, int>(getVertexId(v, gEduct), getVertexId(j, gProduct)));
 						PtoE->insert(std::pair<int, int>(getVertexId(j, gProduct), getVertexId(v, gEduct)));
 						if(num_vertices(gEduct) == EtoP->size()){
 							std::cout << "asasas" << std::endl;
-							check = verify(gEduct, gProduct, EtoP, PtoE, pMolEduct, pMolProduct, vertexMap, vertexMaps, check);
+							verify(gEduct, gProduct, EtoP, PtoE, pMolEduct, pMolProduct, vertexMap, vertexMaps);
 							std::cout << "laaaaa" << std::endl;
 						} else {
 							Permutate(gEduct, gProduct, EtoP, PtoE, pMolEduct, pMolProduct, vertexMap, vertexMaps);
