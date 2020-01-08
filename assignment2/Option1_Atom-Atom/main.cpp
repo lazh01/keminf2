@@ -29,7 +29,6 @@ using BondType = mod::BondType;
 using PropString = mod::lib::Graph::LabelledGraph::PropStringType;
 using MolView = mod::lib::Graph::PropMolecule;
 using molList = mod::lib::detail::UnionPropMolecule<mod::lib::Graph::LabelledGraph>;
-using edgeDisc = jla_boost::union_graph<jla_boost::EdgeIndexedAdjacencyList<boost::undirectedS>>::edge_descriptor;
 using mod::lib::Chem::bondToChar;
 
 std::unique_ptr<mod::lib::Rules::Real> createRule(const VertexMap &vertexMap,
@@ -203,8 +202,10 @@ void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std:
 	Oedges.erase(current);
 	int count = 1;
 	std::set<int> cycle;
+	std::cout first;
 	while ((Xedges.size() != 0) || (Oedges.size() != 0))
 	{
+		std::cout "," current;
 		if (count % 2 == 1)
 		{
 			if (Xedges.find(current) == Xedges.end())
@@ -230,6 +231,7 @@ void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std:
 		cycle.insert(current);
 		count = count + 1;
 	}
+	std::cout << std::endl;
 
 	if (first == current)
 	{
