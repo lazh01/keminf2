@@ -344,6 +344,9 @@ std::vector<std::shared_ptr<mod::rule::Rule>> doStuff(const std::vector<std::sha
 				VertexMap::value_type(getVertexFromId(idEduct, gEduct), getVertexFromId(idProduct, gProduct)));
 		};
 	std::list<vert> listv;
+	for(const auto v : asRange(vertices(gEduct))){
+		listv.push_back(v);
+	}
 	Permutate(gEduct, gProduct, &EtoP, &PtoE, pMolEduct, pMolProduct, &vertexMap, &vertexMaps);
 
 	/*
