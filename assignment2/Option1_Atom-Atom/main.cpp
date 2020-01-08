@@ -431,7 +431,7 @@ void validMap(std::set<int> *cycle, std::map<int, int> *EtoP, ChemGraph gEduct, 
 	vertexMap.clear();
 }
 
-void verify(gt gEduct, gt gProduct, std::map<int, int> *EtoP, std::map<int, int> *PtoE){
+void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std::map<int, int> *PtoE){
 	std::map<int, int> Oedges;
 	std::map<int, int> Xedges;
 	
@@ -507,7 +507,7 @@ void verify(gt gEduct, gt gProduct, std::map<int, int> *EtoP, std::map<int, int>
 }
 
 //recursively finds possibly valid mappings from educt to product
-void Permutate(gt gEduct, gt gProduct, std::map<int, int> *EtoP, std::map<int, int> *PtoE){
+void Permutate(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std::map<int, int> *PtoE){
 	if(num_vertices(gEduct == EtoP.size())){
 		verify(gEduct, gProduct, EtoP, PtoE);
 	} else {
