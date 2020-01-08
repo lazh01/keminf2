@@ -200,7 +200,6 @@ std::set<int> *verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *
 	Oedges.erase(first);
 	Oedges.erase(current);
 	int count = 1;
-	std::set<int> cycle;
 	cycle->insert(first);
 	cycle->insert(current);
 	while ((Xedges.size() != 0) || (Oedges.size() != 0))
