@@ -441,9 +441,9 @@ void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std:
 		for(const auto e : asRange(out_edges(v, gEduct))) {
 			const auto t = target(e, gEduct);
 			Oedges.insert(std::pair<int, int>(getVertexId(v, gEduct), getVertexId(t, gEduct)));
-			for(const auto ep : asRange(out_edges(getVertexFromId(EtoP.find(vId)->second, gProduct), gProduct)) {
+			for(const auto ep : asRange(out_edges(getVertexFromId(EtoP->find(vId)->second, gProduct), gProduct)) {
 				const auto tp = target(ep, gProduct);
-				if(PtoE.find(getVertexId(tp, gProduct))->second == getVertexId(t, gEduct)){
+				if(PtoE->find(getVertexId(tp, gProduct))->second == getVertexId(t, gEduct)){
 					if( bondValue(e) < bondValue(ep)){
 						Oedges.erase(vId);
 					}
@@ -456,12 +456,12 @@ void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std:
 		int vId= getVertexId(v, gProduct);
 		for(const auto e : asRange(out_edges(v, gProduct))) {
 			const auto t = target(e, gProduct);
-			Xedges.insert(std::pair<int, int>(PtoE.find(getVertexId(v, gProduct))->second, PtoE.find(getVertexId(t, gProduct))->second));
-			for(const auto ep : asRange(out_edges(getVertexFromId(PtoE.find(vId)->second, gEduct), gEduct)) {
+			Xedges.insert(std::pair<int, int>(PtoE->find(getVertexId(v, gProduct))->second, PtoE->find(getVertexId(t, gProduct))->second));
+			for(const auto ep : asRange(out_edges(getVertexFromId(PtoE->find(vId)->second, gEduct), gEduct)) {
 				const auto tp = target(ep, gEduct);
-				if(PtoE.find(getVertexId(tp, gEduct))->second == getVertexId(t, gProduct)){
+				if(PtoE->find(getVertexId(tp, gEduct))->second == getVertexId(t, gProduct)){
 					if( bondValue(e) < bondValue(ep)){
-						Xedges.erase(PtoE.find(vId)->second);
+						Xedges.erase(PtoE->find(vId)->second);
 					}
 				}
 			}
@@ -476,7 +476,7 @@ void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std:
 	int current = Oedges.begin()->second;
 	int tmp;
 	Oedges.erase(first);
-	Oedges.erase(second);
+	Oedges.erase(current);
 	int count = 1;
 	std::set<int> cycle;
 	while( (Xedges.size() != 0) ||  (Oedges.size() != 0) ){
@@ -510,19 +510,19 @@ void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std:
 template <typename ChemGraph>
 //recursively finds possibly valid mappings from educt to product
 void Permutate(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std::map<int, int> *PtoE){
-	if(num_vertices(gEduct == EtoP.size())){
+	if(num_vertices(gEduct == EtoP->size())){
 		verify(gEduct, gProduct, EtoP, PtoE);
 	} else {
 		//Finds unmapped vertex from educt and maps it to an unmapped vertex from product with the same atom symbol
 		for(const auto v : asRange(vertices(gEduct))){
-			if(EtoP.find(getVertexId(v, gEduct)) == EtoP.end()){
+			if(EtoP->find(getVertexId(v, gEduct)) == EtoP->end()){
 				for(const auto j : asRange(vertices(gProduct))) {
-					if(pMolEduct[v] == pMolProduct[j] && PtoE.find(j) == PtoE.end()){
-						EtoP.insert(std::pair<int, int>(getVertexId(v, gEduct), getVertexId(j, gProduct)));
-						PtoE.insert(std::pair<int, int>(getVertexId(j, gProduct), getVertexId(v, gEduct)));
+					if(pMolEduct[v] == pMolProduct[j] && PtoE->find(j) == PtoE->end()){
+						EtoP->insert(std::pair<int, int>(getVertexId(v, gEduct), getVertexId(j, gProduct)));
+						PtoE->insert(std::pair<int, int>(getVertexId(j, gProduct), getVertexId(v, gEduct)));
 						Permutate(gEduct, gProduct, EtoP, PtoE);
-						EtoP.erase(getVertexId(v, gEduct));
-						PtoE.erase(getVertexId(j, gProduct));
+						EtoP->erase(getVertexId(v, gEduct));
+						PtoE->erase(getVertexId(j, gProduct));
 					}
 				}
 			}
