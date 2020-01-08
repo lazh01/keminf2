@@ -240,7 +240,7 @@ void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std:
 
 template <typename AutoTypes>
 //recursively finds possibly valid mappings from educt to product
-void Permutate(AutoTypes gEduct, AutoTypes gProduct, std::map<int, int> *EtoP, std::map<int, int> *PtoE, molList pMolEduct, molList pMolProduct, VertexMap *vertexMap, std::vector<VertexMap> *vertexMaps)
+void Permutate(AutoTypes gEduct, AutoTypes gProduct, std::map<int, int> *EtoP, std::map<int, int> *PtoE, molList pMolEduct, molList pMolProduct, VertexMap *vertexMap, std::vector<VertexMap> *vertexMaps, std::list<vert> *listv)
 {
 	if (num_vertices(gEduct) == EtoP->size())
 	{
@@ -249,8 +249,7 @@ void Permutate(AutoTypes gEduct, AutoTypes gProduct, std::map<int, int> *EtoP, s
 	else
 	{
 		//Finds unmapped vertex from educt and maps it to an unmapped vertex from product with the same atom symbol
-		for (const auto v : asRange(vertices(gEduct)))
-		{	
+			v = listv->pop_front();
 			if (EtoP->find(getVertexId(v, gEduct)) == EtoP->end())
 			{
 				for (const auto j : asRange(vertices(gProduct)))
@@ -260,13 +259,12 @@ void Permutate(AutoTypes gEduct, AutoTypes gProduct, std::map<int, int> *EtoP, s
 						//std::cout << pMolProduct[j] << "\t\"" << pMolEduct[v] << "\"" << std::endl;
 						EtoP->insert(std::pair<int, int>(getVertexId(v, gEduct), getVertexId(j, gProduct)));
 						PtoE->insert(std::pair<int, int>(getVertexId(j, gProduct), getVertexId(v, gEduct)));
-						Permutate(gEduct, gProduct, EtoP, PtoE, pMolEduct, pMolProduct, vertexMap, vertexMaps);
+						Permutate(gEduct, gProduct, EtoP, PtoE, pMolEduct, pMolProduct, vertexMap, vertexMaps, listv);
 						EtoP->erase(getVertexId(v, gEduct));
 						PtoE->erase(getVertexId(j, gProduct));
 					}
 				}
 			}
-		}
 	}
 }
 
@@ -347,7 +345,7 @@ std::vector<std::shared_ptr<mod::rule::Rule>> doStuff(const std::vector<std::sha
 	for(const auto v : asRange(vertices(gEduct))){
 		listv.push_back(v);
 	}
-	Permutate(gEduct, gProduct, &EtoP, &PtoE, pMolEduct, pMolProduct, &vertexMap, &vertexMaps);
+	Permutate(gEduct, gProduct, &EtoP, &PtoE, pMolEduct, pMolProduct, &vertexMap, &vertexMaps, &listv);
 
 	/*
 	{ // this is example code and probably only works when the example graphs are loaded
