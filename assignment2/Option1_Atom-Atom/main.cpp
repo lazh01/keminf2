@@ -151,7 +151,7 @@ void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std:
 	
 	
 	if(first == current){
-		validMap(cycle, EtoP, gEduct, gProduct);
+		//validMap(cycle, EtoP, gEduct, gProduct);
 	}
 }
 
