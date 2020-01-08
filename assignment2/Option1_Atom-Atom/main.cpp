@@ -101,13 +101,13 @@ void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std:
 
 	std::cout << "EtoP" << '\n';
 
-	for (it=EtoP.begin(); it!=EtoP.end(); ++it){
+	for (it=EtoP->begin(); it!=EtoP->end(); ++it){
     	std::cout << it->first << " => " << it->second << '\n';
 	}
 
 	std::cout << "PtoE" << '\n';
 
-	for (it=PtoE.begin(); it!=PtoE.end(); ++it){
+	for (it=PtoE->begin(); it!=PtoE->end(); ++it){
     	std::cout << it->first << " => " << it->second << '\n';
 	}
 
