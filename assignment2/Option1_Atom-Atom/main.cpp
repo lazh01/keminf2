@@ -92,8 +92,8 @@ int edgeValue(Edge edge, molList pMol){
 template <typename ChemGraph>
 std::set<int> *verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std::map<int, int> *PtoE, molList pMolEduct, molList pMolProduct, VertexMap *vertexMap, std::vector<VertexMap> *vertexMaps)
 {
-	std::set<int> cycle;
-	std::set<int> ret;
+	std::set<int> *cycle;
+	std::set<int> *ret;
 	std::map<int, int> Oedges;
 	std::map<int, int> Xedges;
 	/*std::map<int, int>::iterator it;
@@ -126,7 +126,7 @@ std::set<int> *verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *
 					{
 						if (bondValue(pMolEduct[e]) > bondValue(pMolProduct[ep]))
 						{
-							return &ret;
+							return ret;
 						}
 					}
 				}
@@ -166,7 +166,7 @@ std::set<int> *verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *
 					{
 						if (bondValue(pMolProduct[e]) > bondValue(pMolEduct[ep]))
 						{
-							return &ret;
+							return ret;
 						}
 					}
 				}
@@ -191,7 +191,7 @@ std::set<int> *verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *
 
 	if (Oedges.size() != Xedges.size())
 	{
-		return &ret;
+		return ret;
 	}
 
 	int first = Oedges.begin()->first;
@@ -201,15 +201,15 @@ std::set<int> *verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *
 	Oedges.erase(current);
 	int count = 1;
 	std::set<int> cycle;
-	cycle.insert(first);
-	cycle.insert(current);
+	cycle->insert(first);
+	cycle->insert(current);
 	while ((Xedges.size() != 0) || (Oedges.size() != 0))
 	{
 		if (count % 2 == 1)
 		{
 			if (Xedges.find(current) == Xedges.end())
 			{
-				return &ret;
+				return ret;
 			}
 			tmp = Xedges.find(current)->second;
 			Xedges.erase(current);
@@ -220,24 +220,24 @@ std::set<int> *verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *
 		{
 			if (Oedges.find(current) == Oedges.end())
 			{
-				return &ret;
+				return ret;
 			}
 			tmp = Oedges.find(current)->second;
 			Oedges.erase(current);
 			Oedges.erase(tmp);
 			current = tmp;
 		}
-		cycle.insert(current);
+		cycle->insert(current);
 		count = count + 1;
 	}
 
 	if ((first == current) && (count % 2 == 0))
 	{
 		//std::cout << "valid mapping" << std::endl;
-		validMap(&cycle, EtoP, gEduct, gProduct, vertexMap, vertexMaps);
-		return &cycle;
+		validMap(cycle, EtoP, gEduct, gProduct, vertexMap, vertexMaps);
+		return cycle;
 	}
-	return &ret;
+	return ret;
 }
 
 template <typename AutoTypes>
@@ -345,7 +345,7 @@ std::vector<std::shared_ptr<mod::rule::Rule>> doStuff(const std::vector<std::sha
 		Check if mapping X results in mono-cyclic transition
 		Option 1, use possible mapping to build product from educt by changing the end of c/2 bonds from the educt.
 		Option 2, if the mapping is correct, find vertex where neighbor does not corespond with mapping,
-		by following edges which do not corespond one should find the vertices in the cycle.
+		by following edges which do not corespond one should find the vertices in the cycle->
 		*/
 
 	std::map<int, int> EtoP;
