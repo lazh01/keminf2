@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/selar16/keminf2/keminf2/assignment2/Option1_Atom-Atom/main.cpp
+/home/selar16/keminf2/keminf2/assignment2/code/Option1_Atom-Atom/main.cpp
 mod/Chem.hpp
 -
 mod/graph/Graph.hpp

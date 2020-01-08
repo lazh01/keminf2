@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/selar16/keminf2/keminf2/assignment2/Option1_Atom-Atom/main.cpp" "/home/selar16/keminf2/keminf2/assignment2/Option1_Atom-Atom/CMakeFiles/doStuff.dir/main.cpp.o"
+  "/home/selar16/keminf2/keminf2/assignment2/code/Option1_Atom-Atom/main.cpp" "/home/selar16/keminf2/keminf2/assignment2/code/Option1_Atom-Atom/CMakeFiles/doStuff.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

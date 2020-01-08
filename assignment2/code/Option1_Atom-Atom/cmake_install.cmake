@@ -1,4 +1,4 @@
-# Install script for directory: /home/selar16/keminf2/keminf2/assignment2/Option1_Atom-Atom
+# Install script for directory: /home/selar16/keminf2/keminf2/assignment2/code/Option1_Atom-Atom
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -52,7 +52,7 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-file(INSTALL DESTINATION "/usr/local" TYPE EXECUTABLE FILES "/home/selar16/keminf2/keminf2/assignment2/Option1_Atom-Atom/doStuff")
+file(INSTALL DESTINATION "/usr/local" TYPE EXECUTABLE FILES "/home/selar16/keminf2/keminf2/assignment2/code/Option1_Atom-Atom/doStuff")
   if(EXISTS "$ENV{DESTDIR}/usr/local/doStuff" AND
      NOT IS_SYMLINK "$ENV{DESTDIR}/usr/local/doStuff")
     file(RPATH_CHANGE
@@ -80,7 +80,7 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-file(INSTALL DESTINATION "/usr/local" TYPE MODULE FILES "/home/selar16/keminf2/keminf2/assignment2/Option1_Atom-Atom/pydoStuff.so")
+file(INSTALL DESTINATION "/usr/local" TYPE MODULE FILES "/home/selar16/keminf2/keminf2/assignment2/code/Option1_Atom-Atom/pydoStuff.so")
   if(EXISTS "$ENV{DESTDIR}/usr/local/pydoStuff.so" AND
      NOT IS_SYMLINK "$ENV{DESTDIR}/usr/local/pydoStuff.so")
     file(RPATH_CHANGE
@@ -101,5 +101,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/selar16/keminf2/keminf2/assignment2/Option1_Atom-Atom/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/selar16/keminf2/keminf2/assignment2/code/Option1_Atom-Atom/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

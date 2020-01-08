@@ -56,4 +56,4 @@ def include(fName, checkDup=True, putDup=True, skipDup=True):
 mod.include = include
 # From command line arguments
 include("test.py")
-# PYTHONPATH=::/mnt/Shared/jlandersen/shared/lib:/mnt/Shared/jlandersen/shared/lib:/home/selar16/keminf2/keminf2/assignment2/Option1_Atom-Atom
+# PYTHONPATH=::/mnt/Shared/jlandersen/shared/lib:/mnt/Shared/jlandersen/shared/lib:/home/selar16/keminf2/keminf2/assignment2/code/Option1_Atom-Atom
