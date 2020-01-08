@@ -98,7 +98,7 @@ void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std:
 {
 	std::map<int, int> Oedges;
 	std::map<int, int> Xedges;
-	std::map<int, int>::iterator it;
+	/*std::map<int, int>::iterator it;
 	std::cout << "EtoP" << '\n';
 
 	for (it=EtoP->begin(); it!=EtoP->end(); ++it){
@@ -109,7 +109,9 @@ void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std:
 
 	for (it=PtoE->begin(); it!=PtoE->end(); ++it){
     	std::cout << it->first << " => " << it->second << '\n';
-	}
+	}*/
+
+	std::cout << "Educt edges" << '\n';
 
 	for (const auto v : asRange(vertices(gEduct)))
 	{
@@ -124,7 +126,7 @@ void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std:
 					const auto tp = target(ep, gProduct);
 					if (PtoE->find(getVertexId(tp, gProduct))->second == getVertexId(t, gEduct))
 					{
-						if (bondValue(pMolEduct[e]) < bondValue(pMolProduct[ep]))
+						if (bondValue(pMolEduct[e]) <= bondValue(pMolProduct[ep]))
 						{
 							return;
 						}
@@ -139,7 +141,7 @@ void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std:
 					const auto tp = target(ep, gProduct);
 					if (PtoE->find(getVertexId(tp, gProduct))->second == getVertexId(t, gEduct))
 					{
-						if (bondValue(pMolEduct[e]) < bondValue(pMolProduct[ep]))
+						if (bondValue(pMolEduct[e]) <= bondValue(pMolProduct[ep]))
 						{
 							Oedges.erase(vId);
 						}
@@ -148,6 +150,8 @@ void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std:
 			}
 		}
 	}
+
+	std::cout << "Product edges" << '\n';
 
 	for (const auto v : asRange(vertices(gProduct)))
 	{
@@ -162,7 +166,7 @@ void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std:
 					const auto tp = target(ep, gEduct);
 					if (PtoE->find(getVertexId(tp, gEduct))->second == getVertexId(t, gProduct))
 					{
-						if (bondValue(pMolProduct[e]) < bondValue(pMolEduct[ep]))
+						if (bondValue(pMolProduct[e]) <= bondValue(pMolEduct[ep]))
 						{
 							return;
 						}
@@ -177,7 +181,7 @@ void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std:
 					const auto tp = target(ep, gEduct);
 					if (PtoE->find(getVertexId(tp, gEduct))->second == getVertexId(t, gProduct))
 					{
-						if (bondValue(pMolProduct[e]) < bondValue(pMolEduct[ep]))
+						if (bondValue(pMolProduct[e]) <= bondValue(pMolEduct[ep]))
 						{
 							Xedges.erase(PtoE->find(vId)->second);
 						}
