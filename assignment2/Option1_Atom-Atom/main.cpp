@@ -256,7 +256,7 @@ void Permutate(AutoTypes gEduct, AutoTypes gProduct, std::map<int, int> *EtoP, s
 				{
 					if ((pMolEduct[v] == pMolProduct[j]) && (PtoE->find(getVertexId(j, gProduct)) == PtoE->end()))
 					{
-						int i = 0;
+						/*int i = 0;
 						for( it = check->begin(); it != check->end(); ++it){
 							if(EtoP->find(*it) != EtoP->end()){
 								i = i+1;
@@ -266,11 +266,9 @@ void Permutate(AutoTypes gEduct, AutoTypes gProduct, std::map<int, int> *EtoP, s
 							return;
 						} else if (check->size() > i){
 							check = &empty;
-						}
+						}*/
 						//std::cout << pMolProduct[j] << "\t\"" << pMolEduct[v] << "\"" << std::endl;
-						std::cout << "fras" << std::endl;
 						EtoP->insert(std::pair<int, int>(getVertexId(v, gEduct), getVertexId(j, gProduct)));
-						std::cout << "snas" << std::endl;
 						PtoE->insert(std::pair<int, int>(getVertexId(j, gProduct), getVertexId(v, gEduct)));
 						if(num_vertices(gEduct) == EtoP->size()){
 							std::cout << "asasas" << std::endl;
