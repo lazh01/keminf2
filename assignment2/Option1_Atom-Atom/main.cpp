@@ -199,6 +199,7 @@ void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std:
 	Oedges.erase(current);
 	int count = 1;
 	std::set<int> cycle;
+	cycle.insert(first);
 	while ((Xedges.size() != 0) || (Oedges.size() != 0))
 	{
 		if (count % 2 == 1)
