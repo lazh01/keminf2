@@ -479,7 +479,9 @@ int main(int argc, char **argv)
 		educts.push_back(g1);
 		products.push_back(g2);
 	}
-	std::vector<std::shared_ptr<mod::rule::Rule>> rules = doStuff(educts, products);
+	int c = 4;
+	int k = 0;
+	std::vector<std::shared_ptr<mod::rule::Rule>> rules = doStuff(educts, products, c, k);
 	for (auto r : rules)
 		r->print();
 	return 0;
