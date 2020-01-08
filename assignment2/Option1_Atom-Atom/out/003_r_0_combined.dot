@@ -1,10 +1,10 @@
 graph G {
 	0 [ label="C | C" ]
 	1 [ label="C | C" ]
-	2 [ label="O | O" ]
-	3 [ label="H | H" ]
-	1 -- 0 [ label="- | =" ]
-	2 -- 1 [ label="= | -" ]
-	3 -- 0 [ style=dashed label="-" ]
-	3 -- 2 [ style=dotted label="-" ]
+	2 [ label="C | C" ]
+	3 [ label="C | C" ]
+	1 -- 0 [ label="= | -" ]
+	3 -- 2 [ label="= | -" ]
+	1 -- 2 [ style=dotted label="-" ]
+	0 -- 3 [ style=dotted label="-" ]
 }

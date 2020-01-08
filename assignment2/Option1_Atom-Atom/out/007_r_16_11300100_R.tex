@@ -1,0 +1,11 @@
+\begin{tikzpicture}[remember picture, scale=\modGraphScale, baseline={([yshift={-0.5ex}]current bounding box)}, solid]
+\input{\modInputPrefix/out/005_r_16_mol_coord.tex}
+\node[modStyleGraphVertex, at=(\modIdPrefix v-coord-0)] (\modIdPrefix v-0) {C};
+\node[modStyleGraphVertex, at=(\modIdPrefix v-coord-1)] (\modIdPrefix v-1) {C};
+\node[modStyleGraphVertex, at=(\modIdPrefix v-coord-2)] (\modIdPrefix v-2) {C};
+\node[modStyleGraphVertex, at=(\modIdPrefix v-coord-3)] (\modIdPrefix v-3) {C};
+\modDrawSingleBond{0}{3}{1}{1}{Green, text=Green}{}
+\modDrawSingleBond{2}{0}{1}{1}{Green, text=Green}{}
+\modDrawSingleBond{1}{3}{1}{1}{Green, text=Green}{}
+\modDrawSingleBond{1}{2}{1}{1}{Green, text=Green}{}
+\end{tikzpicture}

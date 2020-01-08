@@ -33,6 +33,8 @@ map
 -
 iterator
 -
+typeinfo
+-
 boost/python.hpp
 -
 mod/Config.hpp

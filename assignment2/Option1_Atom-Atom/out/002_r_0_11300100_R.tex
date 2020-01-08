@@ -2,9 +2,10 @@
 \input{\modInputPrefix/out/000_r_0_mol_coord.tex}
 \node[modStyleGraphVertex, at=(\modIdPrefix v-coord-0)] (\modIdPrefix v-0) {C};
 \node[modStyleGraphVertex, at=(\modIdPrefix v-coord-1)] (\modIdPrefix v-1) {C};
-\node[modStyleGraphVertex, text=red, at=(\modIdPrefix v-coord-2)] (\modIdPrefix v-2) {O};
-\node[modStyleGraphVertex, text=gray, at=(\modIdPrefix v-coord-3)] (\modIdPrefix v-3) {H};
-\modDrawDoubleBond{1}{0}{1}{1}{Green, text=Green}{}
-\modDrawSingleBond{2}{1}{1}{1}{Green, text=Green}{}
+\node[modStyleGraphVertex, at=(\modIdPrefix v-coord-2)] (\modIdPrefix v-2) {C};
+\node[modStyleGraphVertex, at=(\modIdPrefix v-coord-3)] (\modIdPrefix v-3) {C};
+\modDrawSingleBond{1}{0}{1}{1}{Green, text=Green}{}
 \modDrawSingleBond{3}{2}{1}{1}{Green, text=Green}{}
+\modDrawSingleBond{1}{2}{1}{1}{Green, text=Green}{}
+\modDrawSingleBond{0}{3}{1}{1}{Green, text=Green}{}
 \end{tikzpicture}
