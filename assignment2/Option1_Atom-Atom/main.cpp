@@ -88,9 +88,7 @@ template <typename ChemGraph>
 void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std::map<int, int> *PtoE, molList pMolEduct, molList pMolProduct){
 	std::map<int, int> Oedges;
 	std::map<int, int> Xedges;
-	std::cout << "here" << std::endl;
 	for(const auto v : asRange(vertices(gEduct))){
-		std::cout << "..";
 		int vId= getVertexId(v, gEduct);
 		for(const auto e : asRange(out_edges(v, gEduct))) {
 			const auto t = target(e, gEduct);
@@ -101,15 +99,12 @@ void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std:
 			for(const auto ep : asRange(out_edges(getVertexFromId(EtoP->find(vId)->second, gProduct), gProduct))) {
 				const auto tp = target(ep, gProduct);
 				if(PtoE->find(getVertexId(tp, gProduct))->second == getVertexId(t, gEduct)){
-					std::cout << bondValue(pMolEduct[e]) << "\t\"" << bondValue(pMolProduct[ep]) << "\"" << std::endl;
 					if( bondValue(pMolEduct[e]) < bondValue(pMolProduct[ep])){
 						Oedges.erase(vId);
 					}
 				}
 			}
 		}
-
-		std::cout << std::endl;
 	}
 
 	for(const auto v : asRange(vertices(gProduct))){
@@ -166,6 +161,7 @@ void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std:
 	
 	
 	if(first == current){
+		std::<< "valid mapping" << std::endl;
 		//validMap(cycle, EtoP, gEduct, gProduct);
 	}
 }
