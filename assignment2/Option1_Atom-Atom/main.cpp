@@ -74,9 +74,9 @@ void validMap(std::set<int> *cycle, std::map<int, int> *EtoP, ChemGraph gEduct, 
 }
 
 int edgeValue(edgeDisc *edge, molList *pMol){
-	if(pMol[edge] == '-'){
+	if(pMol[&edge] == '-'){
 		return 1;
-	} else if(pMol[edge] == '='){
+	} else if(pMol[&edge] == '='){
 		return 2;
 	} else{
 		return 3;
