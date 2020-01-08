@@ -246,6 +246,7 @@ void Permutate(AutoTypes gEduct, AutoTypes gProduct, std::map<int, int> *EtoP, s
 		//Finds unmapped vertex from educt and maps it to an unmapped vertex from product with the same atom symbol
 		std::set<int> *check;
 		std::set<int> empty;
+		check = &empty;
 		std::set<int>::iterator it;
 		for (const auto v : asRange(vertices(gEduct)))
 		{
