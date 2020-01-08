@@ -441,7 +441,7 @@ void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std:
 		for(const auto e : asRange(out_edges(v, gEduct))) {
 			const auto t = target(e, gEduct);
 			Oedges.insert(std::pair<int, int>(getVertexId(v, gEduct), getVertexId(t, gEduct)));
-			for(const auto ep : asRange(out_edges(getVertexFromId(EtoP->find(vId)->second, gProduct), gProduct)) {
+			for(const auto ep : asRange(out_edges(getVertexFromId(EtoP->find(vId)->second, gProduct), gProduct))) {
 				const auto tp = target(ep, gProduct);
 				if(PtoE->find(getVertexId(tp, gProduct))->second == getVertexId(t, gEduct)){
 					if( bondValue(e) < bondValue(ep)){
@@ -457,7 +457,7 @@ void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std:
 		for(const auto e : asRange(out_edges(v, gProduct))) {
 			const auto t = target(e, gProduct);
 			Xedges.insert(std::pair<int, int>(PtoE->find(getVertexId(v, gProduct))->second, PtoE->find(getVertexId(t, gProduct))->second));
-			for(const auto ep : asRange(out_edges(getVertexFromId(PtoE->find(vId)->second, gEduct), gEduct)) {
+			for(const auto ep : asRange(out_edges(getVertexFromId(PtoE->find(vId)->second, gEduct), gEduct))) {
 				const auto tp = target(ep, gEduct);
 				if(PtoE->find(getVertexId(tp, gEduct))->second == getVertexId(t, gProduct)){
 					if( bondValue(e) < bondValue(ep)){
@@ -508,8 +508,9 @@ void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std:
 }
 
 template <typename ChemGraph>
+template <typename molList>
 //recursively finds possibly valid mappings from educt to product
-void Permutate(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std::map<int, int> *PtoE){
+void Permutate(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std::map<int, int> *PtoE, molList *pMolEduct, molList *pMolProduct){
 	if(num_vertices(gEduct == EtoP->size())){
 		verify(gEduct, gProduct, EtoP, PtoE);
 	} else {
