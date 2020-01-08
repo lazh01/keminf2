@@ -249,7 +249,8 @@ void Permutate(AutoTypes gEduct, AutoTypes gProduct, std::map<int, int> *EtoP, s
 	else
 	{
 		//Finds unmapped vertex from educt and maps it to an unmapped vertex from product with the same atom symbol
-			vert v = listv->pop_front();
+			vert v = listv->front();
+			listv->pop_front();
 			if (EtoP->find(getVertexId(v, gEduct)) == EtoP->end())
 			{
 				for (const auto j : asRange(vertices(gProduct)))
