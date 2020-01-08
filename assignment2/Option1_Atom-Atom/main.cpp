@@ -232,8 +232,8 @@ void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std:
 
 	if (first == current)
 	{
-		std::cout << "valid mapping" << std::endl;
-		//validMap(cycle, EtoP, gEduct, gProduct);
+		//std::cout << "valid mapping" << std::endl;
+		validMap(cycle, EtoP, gEduct, gProduct);
 	}
 }
 
