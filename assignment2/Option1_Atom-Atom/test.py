@@ -20,8 +20,11 @@ pydoStuff.doStuff = _doStuff
 doStuff = _doStuff
 # end of friendlyfier code
 
-g1 = smiles("OCC=O")
-g2 = smiles("OC=CO")
-res = doStuff([g1], [g2])
+#g1 = smiles("OCC=O")
+#g2 = smiles("OC=CO")
+g1 = smiles("C=C")
+g2 = smiles("C=C")
+g3 = smiles("C1CCC1")
+res = doStuff([g1, g2], [g3])
 for a in res:
 	a.print()
