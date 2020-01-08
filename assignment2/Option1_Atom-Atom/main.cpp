@@ -74,7 +74,7 @@ void validMap(std::set<int> *cycle, std::map<int, int> *EtoP, ChemGraph gEduct, 
 }
 
 template<typename Edge>
-int edgeValue(Edge edge, molList *pMol){
+int edgeValue(Edge edge, molList pMol){
 	if(pMol[edge] == '-'){
 		return 1;
 	} else if(pMol[edge] == '='){
@@ -85,7 +85,7 @@ int edgeValue(Edge edge, molList *pMol){
 }
 
 template <typename ChemGraph>
-void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std::map<int, int> *PtoE, molList *pMolEduct, molList *pMolProduct){
+void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std::map<int, int> *PtoE, molList pMolEduct, molList pMolProduct){
 	std::map<int, int> Oedges;
 	std::map<int, int> Xedges;
 	std::cout << "here" << std::endl;
@@ -174,7 +174,7 @@ template <typename AutoTypes>
 //recursively finds possibly valid mappings from educt to product
 void Permutate(AutoTypes gEduct, AutoTypes gProduct, std::map<int, int> *EtoP, std::map<int, int> *PtoE, molList pMolEduct, molList pMolProduct){
 	if(num_vertices(gEduct) == EtoP->size()){
-		verify(gEduct, gProduct, EtoP, PtoE);
+		verify(gEduct, gProduct, EtoP, PtoE, pMolEduct, pMolProduct);
 	} else {
 		//Finds unmapped vertex from educt and maps it to an unmapped vertex from product with the same atom symbol
 		for(const auto v : asRange(vertices(gEduct))){
