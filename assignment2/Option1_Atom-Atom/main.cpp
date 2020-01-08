@@ -63,7 +63,7 @@ int bondValue(BondType bt)
 }
 
 template <typename ChemGraph>
-void validMap(std::set<int> *cycle, std::map<int, int> *EtoP, ChemGraph gEduct, ChemGraph gProduct, VertexMap vertexmap, std::vector<VertexMap> vertexMaps)
+void validMap(std::set<int> *cycle, std::map<int, int> *EtoP, ChemGraph gEduct, ChemGraph gProduct, VertexMap vertexMap, std::vector<VertexMap> vertexMaps)
 {
 	std::set<int>::iterator it;
 	for (it = cycle->begin(); it != cycle->end(); ++it)
@@ -226,17 +226,17 @@ void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std:
 	if (first == current)
 	{
 		//std::cout << "valid mapping" << std::endl;
-		//validMap(cycle, EtoP, gEduct, gProduct, vertexmap, vertexMaps);
+		validMap(cycle, EtoP, gEduct, gProduct, vertexMap, vertexMaps);
 	}
 }
 
 template <typename AutoTypes>
 //recursively finds possibly valid mappings from educt to product
-void Permutate(AutoTypes gEduct, AutoTypes gProduct, std::map<int, int> *EtoP, std::map<int, int> *PtoE, molList pMolEduct, molList pMolProduct, VertexMap vertexmap, std::vector<VertexMap> vertexMaps)
+void Permutate(AutoTypes gEduct, AutoTypes gProduct, std::map<int, int> *EtoP, std::map<int, int> *PtoE, molList pMolEduct, molList pMolProduct, VertexMap vertexMap, std::vector<VertexMap> vertexMaps)
 {
 	if (num_vertices(gEduct) == EtoP->size())
 	{
-		verify(gEduct, gProduct, EtoP, PtoE, pMolEduct, pMolProduct, vertexmap, vertexMaps);
+		verify(gEduct, gProduct, EtoP, PtoE, pMolEduct, pMolProduct, vertexMap, vertexMaps);
 	}
 	else
 	{
@@ -252,7 +252,7 @@ void Permutate(AutoTypes gEduct, AutoTypes gProduct, std::map<int, int> *EtoP, s
 						//std::cout << pMolProduct[j] << "\t\"" << pMolEduct[v] << "\"" << std::endl;
 						EtoP->insert(std::pair<int, int>(getVertexId(v, gEduct), getVertexId(j, gProduct)));
 						PtoE->insert(std::pair<int, int>(getVertexId(j, gProduct), getVertexId(v, gEduct)));
-						Permutate(gEduct, gProduct, EtoP, PtoE, pMolEduct, pMolProduct, vertexmap, vertexMaps);
+						Permutate(gEduct, gProduct, EtoP, PtoE, pMolEduct, pMolProduct, vertexMap, vertexMaps);
 						EtoP->erase(getVertexId(v, gEduct));
 						PtoE->erase(getVertexId(j, gProduct));
 					}
