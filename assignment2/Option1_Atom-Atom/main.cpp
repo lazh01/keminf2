@@ -90,9 +90,8 @@ int edgeValue(Edge edge, molList pMol){
 }
 */
 template <typename ChemGraph>
-std::set<int> *verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std::map<int, int> *PtoE, molList pMolEduct, molList pMolProduct, VertexMap *vertexMap, std::vector<VertexMap> *vertexMaps)
+std::set<int> *verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std::map<int, int> *PtoE, molList pMolEduct, molList pMolProduct, VertexMap *vertexMap, std::vector<VertexMap> *vertexMaps, std::set<int> *cycle)
 {
-	std::set<int> *cycle;
 	std::set<int> *ret;
 
 	std::map<int, int> Oedges;
@@ -275,7 +274,7 @@ void Permutate(AutoTypes gEduct, AutoTypes gProduct, std::map<int, int> *EtoP, s
 						PtoE->insert(std::pair<int, int>(getVertexId(j, gProduct), getVertexId(v, gEduct)));
 						if(num_vertices(gEduct) == EtoP->size()){
 							std::cout << "asasas" << std::endl;
-							check = verify(gEduct, gProduct, EtoP, PtoE, pMolEduct, pMolProduct, vertexMap, vertexMaps);
+							check = verify(gEduct, gProduct, EtoP, PtoE, pMolEduct, pMolProduct, vertexMap, vertexMaps, check);
 							std::cout << "laaaaa" << std::endl;
 						} else {
 							Permutate(gEduct, gProduct, EtoP, PtoE, pMolEduct, pMolProduct, vertexMap, vertexMaps);
