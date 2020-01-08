@@ -164,7 +164,7 @@ void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std:
 				for (const auto ep : asRange(out_edges(getVertexFromId(PtoE->find(vId)->second, gEduct), gEduct)))
 				{
 					const auto tp = target(ep, gEduct);
-					if (PtoE->find(getVertexId(tp, gEduct))->second == getVertexId(t, gProduct))
+					if (EtoP->find(getVertexId(tp, gEduct))->second == getVertexId(t, gProduct))
 					{
 						if (bondValue(pMolProduct[e]) <= bondValue(pMolEduct[ep]))
 						{
@@ -179,7 +179,7 @@ void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std:
 				for (const auto ep : asRange(out_edges(getVertexFromId(PtoE->find(vId)->second, gEduct), gEduct)))
 				{
 					const auto tp = target(ep, gEduct);
-					if (PtoE->find(getVertexId(tp, gEduct))->second == getVertexId(t, gProduct))
+					if (EtoP->find(getVertexId(tp, gEduct))->second == getVertexId(t, gProduct))
 					{
 						if (bondValue(pMolProduct[e]) <= bondValue(pMolEduct[ep]))
 						{
