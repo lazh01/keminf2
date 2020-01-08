@@ -15,8 +15,8 @@ _doStuff_orig = pydoStuff.doStuff
 def _doStuff(educts, products, c, k):
 	return mod._unwrap(_doStuff_orig(
 		mod._wrap(mod.VecGraph, educts),
-		mod._wrap(mod.VecGraph, products)
-		mod._wrap(int, c)
+		mod._wrap(mod.VecGraph, products),
+		mod._wrap(int, c),
 		mod._wrap(int, k)))
 pydoStuff.doStuff = _doStuff
 doStuff = _doStuff
