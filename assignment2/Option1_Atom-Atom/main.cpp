@@ -28,7 +28,7 @@ using AtomData = mod::AtomData;
 using BondType = mod::BondType;
 using PropString = mod::lib::Graph::LabelledGraph::PropStringType;
 using MolView = mod::lib::Graph::PropMolecule;
-
+using molList = mod::lib::detail::UnionPropMolecule<mod::lib::Graph::LabelledGraph>
 using mod::lib::Chem::bondToChar;
 
 std::unique_ptr<mod::lib::Rules::Real> createRule(const VertexMap &vertexMap,
@@ -150,7 +150,7 @@ void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std:
 
 template <typename AutoTypes>
 //recursively finds possibly valid mappings from educt to product
-void Permutate(AutoTypes gEduct, AutoTypes gProduct, std::map<int, int> *EtoP, std::map<int, int> *PtoE, AutoTypes *pMolEduct, AutoTypes *pMolProduct){
+void Permutate(AutoTypes gEduct, AutoTypes gProduct, std::map<int, int> *EtoP, std::map<int, int> *PtoE, molList *pMolEduct, molList *pMolProduct){
 	if(num_vertices(gEduct == EtoP->size())){
 		//verify(gEduct, gProduct, EtoP, PtoE);
 	} else {
