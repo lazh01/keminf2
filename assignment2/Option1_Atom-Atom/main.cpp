@@ -267,6 +267,7 @@ void Permutate(AutoTypes gEduct, AutoTypes gProduct, std::map<int, int> *EtoP, s
 					}
 				}
 			}
+			listv->push_back(v);
 	}
 }
 
