@@ -423,7 +423,7 @@ void validMap(std::set<int> *cycle, std::map<int, int> *EtoP, gt gEduct, gt gPro
 			vertexMap.insert(
 					VertexMap::value_type(getVertexFromId(idEduct, gEduct), getVertexFromId(idProduct, gProduct)));
 		};
-	for(it = cycle.begin(); it != cycle.end(); ++it ){
+	for(it = cycle->begin(); it != cycle->end(); ++it ){
 		setById(*it, EtoP->find(*it)->second);
 		
 	}
