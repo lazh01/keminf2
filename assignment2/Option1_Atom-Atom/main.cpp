@@ -111,7 +111,7 @@ void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std:
     	std::cout << it->first << " => " << it->second << '\n';
 	}*/
 
-	std::cout << "Educt edges" << '\n';
+	//std::cout << "Educt edges" << '\n';
 
 	for (const auto v : asRange(vertices(gEduct)))
 	{
@@ -151,7 +151,7 @@ void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std:
 		}
 	}
 
-	std::cout << "Product edges" << '\n';
+	//std::cout << "Product edges" << '\n';
 
 	for (const auto v : asRange(vertices(gProduct)))
 	{
@@ -191,6 +191,7 @@ void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std:
 		}
 	}
 
+	std::cout << "hier" << std::endl;
 	std::cout << Oedges.size() << Xedges.size() << std::endl;
 
 	if (Oedges.size() != Xedges.size())
