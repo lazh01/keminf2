@@ -102,7 +102,7 @@ void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std:
 				const auto tp = target(ep, gProduct);
 				if(PtoE->find(getVertexId(tp, gProduct))->second == getVertexId(t, gEduct)){
 					std::cout << bondValue(pMolEduct[e]) << "\t\"" << bondValue(pMolProduct[ep]) << "\"" << std::endl;
-					if( bondValue(pMolEduct[e]) < edgeValue(pMolProduct[ep])){
+					if( bondValue(pMolEduct[e]) < bondValue(pMolProduct[ep])){
 						Oedges.erase(vId);
 					}
 				}
