@@ -98,6 +98,19 @@ void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std:
 {
 	std::map<int, int> Oedges;
 	std::map<int, int> Xedges;
+
+	std::cout << "EtoP" << '\n';
+
+	for (it=EtoP.begin(); it!=EtoP.end(); ++it){
+    	std::cout << it->first << " => " << it->second << '\n';
+	}
+
+	std::cout << "PtoE" << '\n';
+
+	for (it=PtoE.begin(); it!=PtoE.end(); ++it){
+    	std::cout << it->first << " => " << it->second << '\n';
+	}
+
 	for (const auto v : asRange(vertices(gEduct)))
 	{
 		int vId = getVertexId(v, gEduct);
