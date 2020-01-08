@@ -103,18 +103,25 @@ std::vector<std::shared_ptr<mod::rule::Rule> > doStuff(const std::vector<std::sh
         //
         //
 		
-		std::map<int, int> EtoP;
-		for(const auto v : asRange(vertices(gEduct))) {
-			for(const auto j : asRange(vertices(gProduct))) {
-				if(pMolEduct[v] == pMolProduct[j]){
-					EtoP.insert(std::pair<int, int>(getVertexId(v, gEduct), getVertexId(j, gProduct)));
-					break;
-				}
-			}
-			break;
-		}
 
+		//template
+		/*
+		Generate possibly valid mapping of vertices X
+		Option 1, map vertices of same atom to each other
 
+		Check if mapping X results in mono-cyclic transition
+		Option 1, use possible mapping to build product from educt by changing the end of c/2 bonds from the educt.
+		Option 2, if the mapping is correct, find vertex where neighbor does not corespond with mapping,
+		by following edges which do not corespond one should find the vertices in the cycle.
+		*/
+
+	/*
+	std::map<int, int> EtoP;
+	std::map<int, int> PtoE;
+	Permutate(gEduct, gProduct, EtoP, PtoE);
+	*/
+
+	
 	std::vector<VertexMap> vertexMaps;
 	{ // this is example code and probably only works when the example graphs are loaded
 		VertexMap vertexMap;
@@ -406,4 +413,118 @@ std::unique_ptr<mod::lib::Rules::Real> createRule(const VertexMap &vertexMap,
 	}
 
 	return std::make_unique<mod::lib::Rules::Real>(std::move(dpoRule), boost::none);
+}
+
+template <typename kgraph>
+void validMap(std::set<int> cycle, std::map<int, int> EtoP, kgraph gEduct, kgraph gProduct){
+	std::set<int>::iterator it;
+	std::vector<VertexMap> vertexMaps;
+	VertexMap vertexMap;
+	auto setById = [&vertexMap, &gEduct, &gProduct](std::size_t idEduct, std::size_t idProduct) {
+			vertexMap.insert(
+					VertexMap::value_type(getVertexFromId(idEduct, gEduct), getVertexFromId(idProduct, gProduct)));
+		};
+	for(it = cycle.begin(); it != cycle.end(); ++it ){
+		setById(*it, EtoP.find(*it)->second);
+		
+	}
+	vertexMaps.push_back(vertexMap);
+	vertexMap.clear();
+}
+
+void verify(kgraph gEduct, kgraph gProduct, std::map<int, int> EtoP, std::map<int, int> PtoE){
+	std::map<int, int> Oedges;
+	std::map<int, int> Xedges;
+	
+	for(const auto v : asRange(vertices(gEduct))){
+		int vId= getVertexId(v, gEduct);
+		for(const auto e : asRange(out_edges(v, gEduct))) {
+			const auto t = target(e, gEduct);
+			Oedges.insert(std::pair<int, int>(getVertexId(v, gEduct), getVertexId(t, gEduct)));
+			for(const auto ep : asRange(out_edges(getVertexFromId(EtoP.find(vId)->second, gProduct), gProduct)) {
+				const auto tp = target(ep, gProduct);
+				if(PtoE.find(getVertexId(tp, gProduct))->second == getVertexId(t, gEduct)){
+					if( bondValue(e) < bondValue(ep)){
+						Oedges.erase(vId);
+					}
+				}
+			}
+		}
+	}
+
+	for(const auto v : asRange(vertices(gProduct))){
+		int vId= getVertexId(v, gProduct);
+		for(const auto e : asRange(out_edges(v, gProduct))) {
+			const auto t = target(e, gProduct);
+			Xedges.insert(std::pair<int, int>(PtoE.find(getVertexId(v, gProduct))->second, PtoE.find(getVertexId(t, gProduct))->second));
+			for(const auto ep : asRange(out_edges(getVertexFromId(PtoE.find(vId)->second, gEduct), gEduct)) {
+				const auto tp = target(ep, gEduct);
+				if(PtoE.find(getVertexId(tp, gEduct))->second == getVertexId(t, gProduct)){
+					if( bondValue(e) < bondValue(ep)){
+						Xedges.erase(PtoE.find(vId)->second);
+					}
+				}
+			}
+		}
+	}
+
+	if(Oedges.size() != Xedges.size()){
+		return;
+	}
+
+	int first = Oedges.begin()->first;
+	int current = Oedges.begin()->second;
+	int tmp;
+	Oedges.erase(first);
+	Oedges.erase(second);
+	int count = 1;
+	std::set<int> cycle;
+	while( (Xedges.size() != 0) ||  (Oedges.size() != 0) ){
+		if(count % 2 == 1){
+			if(Xedges.find(current) == Xedges.end()){
+				return;
+			}
+			tmp = Xedges.find(current)->second;
+			Xedges.erase(current);
+			Xedges.erase(tmp);
+			current = tmp;
+		} else {
+			if(Oedges.find(current) == Oedges.end()){
+				return;
+			}
+			tmp = Oedges.find(current)->second;
+			Oedges.erase(current);
+			Oedges.erase(tmp);
+			current = tmp;
+		}
+		cycle.insert(current);
+		count = count + 1;
+	}
+	
+	
+	if(first == current){
+		validMap(cycle, EtoP, gEduct, gProduct);
+	}
+}
+
+//recursively finds possibly valid mappings from educt to product
+void Permutate(kgraph gEduct, kgraph gProduct, std::map<int, int> EtoP, std::map<int, int> PtoE){
+	if(num_vertices(gEduct == EtoP.size())){
+		verify(gEduct, gProduct, EtoP, PtoE);
+	} else {
+		//Finds unmapped vertex from educt and maps it to an unmapped vertex from product with the same atom symbol
+		for(const auto v : asRange(vertices(gEduct))){
+			if(EtoP.find(getVertexId(v, gEduct)) == EtoP.end()){
+				for(const auto j : asRange(vertices(gProduct))) {
+					if(pMolEduct[v] == pMolProduct[j] && PtoE.find(j) == PtoE.end()){
+						EtoP.insert(std::pair<int, int>(getVertexId(v, gEduct), getVertexId(j, gProduct)));
+						PtoE.insert(std::pair<int, int>(getVertexId(j, gProduct), getVertexId(v, gEduct)));
+						Permutate(gEduct, gProduct, EtoP, PtoE);
+						EtoP.erase(getVertexId(v, gEduct));
+						PtoE.erase(getVertexId(j, gProduct));
+					}
+				}
+			}
+		}
+	}
 }

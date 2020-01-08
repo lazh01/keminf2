@@ -1,0 +1,59 @@
+# Preamble
+import ctypes
+import os
+import sys
+sys.setdlopenflags(sys.getdlopenflags() | ctypes.RTLD_GLOBAL)
+
+# Plugins
+#--------------------------------------------------------------
+import mod
+from mod import *
+import mod
+from mod import *
+
+#--------------------------------------------------------------
+
+
+
+mod.includedFiles = set()
+
+def include(fName, checkDup=True, putDup=True, skipDup=True):
+	t = fName.rpartition("/")
+	if(fName != prefixFilename(fName)):
+		if not mod.config.common.quiet:
+			print("Executing code from '", fName, "' ('", prefixFilename(fName), "')", sep="")
+	else:
+		if not mod.config.common.quiet:
+			print("Executing code from '", fName, "'", sep="")
+	fPrefixed = prefixFilename(fName)
+	skip = False
+	ino = os.stat(fPrefixed).st_ino
+	if checkDup:
+		if ino in mod.includedFiles:
+			if skipDup:
+				skip = True
+			else:
+				print("Include error (checkDup=", checkDup, ", putDup=", putDup, ", skipDup=", skipDup, "): file '", fPrefixed, "' already included once.", sep="")
+				sys.exit(1)
+	if putDup:
+		mod.includedFiles.add(ino)	
+	if t[1] != "":
+		pushFilePrefix(t[0] + t[1])
+	if skip:
+		if not mod.config.common.quiet:
+			print("Skipping inclusion (already included)")
+	else:
+		with open(fPrefixed) as f:
+			code = compile(f.read(), fName, 'exec')
+		exec(code, globals())
+	if t[1] != "":
+		popFilePrefix()
+	if not mod.config.common.quiet:
+		if(fName != prefixFilename(fName)):
+			print("End of code from '", fName, "' ('", prefixFilename(fName), "')", sep="")
+		else:
+			print("End of code from '", fName, "'", sep="")
+mod.include = include
+# From command line arguments
+include("test.py")
+# PYTHONPATH=::/mnt/Shared/jlandersen/shared/lib:/mnt/Shared/jlandersen/shared/lib:/home/selar16/keminf2/keminf2/assignment2/Option1_Atom-Atom
