@@ -92,11 +92,12 @@ int edgeValue(Edge edge, molList pMol){
 }
 */
 template <typename ChemGraph>
-void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std::map<int, int> *PtoE, molList pMolEduct, molList pMolProduct, VertexMap *vertexMap, std::vector<VertexMap> *vertexMaps)
+void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std::map<int, int> *PtoE, molList pMolEduct, molList pMolProduct, VertexMap *vertexMap, std::vector<VertexMap> *vertexMaps, int k, int c)
 {
 	std::map<int, int> Oedges;
 	std::map<int, int> Xedges;
-	/*std::map<int, int>::iterator it;
+	std::set<int>::iterator it;
+	/*
 	std::cout << "EtoP" << '\n';
 
 	for (it=EtoP->begin(); it!=EtoP->end(); ++it){
@@ -231,20 +232,37 @@ void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std:
 		count = count + 1;
 	}
 
+	if (cycle.size() != c){
+		return;
+	}
+
+	std::set<int> nextk;
 	if ((first == current) && (count % 2 == 0))
 	{
 		//std::cout << "valid mapping" << std::endl;
+		for(int i = k; i != 0; i--){
+			for (it = cycle->begin(); it != cycle->end(); ++it)
+			{
+				for (const auto e : asRange(out_edges(*it, gEduct))){
+					t = target(e, gEduct);
+					nextk.insert(getVertexId(t, gEduct));
+				}
+			}
+			for(it = nextk.begin(); it != nextk.end(); ++it){
+				cycle.insert(*it);
+			}
+		}
 		validMap(&cycle, EtoP, gEduct, gProduct, vertexMap, vertexMaps);
 	}
 }
 
 template <typename AutoTypes>
 //recursively finds possibly valid mappings from educt to product
-void Permutate(AutoTypes gEduct, AutoTypes gProduct, std::map<int, int> *EtoP, std::map<int, int> *PtoE, molList pMolEduct, molList pMolProduct, VertexMap *vertexMap, std::vector<VertexMap> *vertexMaps, std::list<vert> *listv)
+void Permutate(AutoTypes gEduct, AutoTypes gProduct, std::map<int, int> *EtoP, std::map<int, int> *PtoE, molList pMolEduct, molList pMolProduct, VertexMap *vertexMap, std::vector<VertexMap> *vertexMaps, std::list<vert> *listv, int c, int k)
 {
 	if (num_vertices(gEduct) == EtoP->size())
 	{
-		verify(gEduct, gProduct, EtoP, PtoE, pMolEduct, pMolProduct, vertexMap, vertexMaps);
+		verify(gEduct, gProduct, EtoP, PtoE, pMolEduct, pMolProduct, vertexMap, vertexMaps, c, k);
 	}
 	else
 	{
@@ -260,7 +278,7 @@ void Permutate(AutoTypes gEduct, AutoTypes gProduct, std::map<int, int> *EtoP, s
 						//std::cout << pMolProduct[j] << "\t\"" << pMolEduct[v] << "\"" << std::endl;
 						EtoP->insert(std::pair<int, int>(getVertexId(v, gEduct), getVertexId(j, gProduct)));
 						PtoE->insert(std::pair<int, int>(getVertexId(j, gProduct), getVertexId(v, gEduct)));
-						Permutate(gEduct, gProduct, EtoP, PtoE, pMolEduct, pMolProduct, vertexMap, vertexMaps, listv);
+						Permutate(gEduct, gProduct, EtoP, PtoE, pMolEduct, pMolProduct, vertexMap, vertexMaps, listv, c, k);
 						EtoP->erase(getVertexId(v, gEduct));
 						PtoE->erase(getVertexId(j, gProduct));
 					}
@@ -271,7 +289,7 @@ void Permutate(AutoTypes gEduct, AutoTypes gProduct, std::map<int, int> *EtoP, s
 }
 
 std::vector<std::shared_ptr<mod::rule::Rule>> doStuff(const std::vector<std::shared_ptr<mod::graph::Graph>> &educts,
-													  const std::vector<std::shared_ptr<mod::graph::Graph>> &products)
+													  const std::vector<std::shared_ptr<mod::graph::Graph>> &products, int k, int c)
 {
 	// first make objects representing the disjoint union of the educts and products
 	const auto makeUnion = [](const auto &gs) {
@@ -347,7 +365,7 @@ std::vector<std::shared_ptr<mod::rule::Rule>> doStuff(const std::vector<std::sha
 	for(const auto v : asRange(vertices(gEduct))){
 		listv.push_back(v);
 	}
-	Permutate(gEduct, gProduct, &EtoP, &PtoE, pMolEduct, pMolProduct, &vertexMap, &vertexMaps, &listv);
+	Permutate(gEduct, gProduct, &EtoP, &PtoE, pMolEduct, pMolProduct, &vertexMap, &vertexMaps, &listv, k, c);
 
 	/*
 	{ // this is example code and probably only works when the example graphs are loaded
