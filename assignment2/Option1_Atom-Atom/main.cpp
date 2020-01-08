@@ -268,7 +268,9 @@ void Permutate(AutoTypes gEduct, AutoTypes gProduct, std::map<int, int> *EtoP, s
 							check = &empty;
 						}
 						//std::cout << pMolProduct[j] << "\t\"" << pMolEduct[v] << "\"" << std::endl;
+						std::cout << "fras" << std::endl;
 						EtoP->insert(std::pair<int, int>(getVertexId(v, gEduct), getVertexId(j, gProduct)));
+						std::cout << "snas" << std::endl;
 						PtoE->insert(std::pair<int, int>(getVertexId(j, gProduct), getVertexId(v, gEduct)));
 						if(num_vertices(gEduct) == EtoP->size()){
 							std::cout << "asasas" << std::endl;
