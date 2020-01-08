@@ -92,6 +92,7 @@ int edgeValue(Edge edge, molList pMol){
 template <typename ChemGraph>
 std::set<int> *verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std::map<int, int> *PtoE, molList pMolEduct, molList pMolProduct, VertexMap *vertexMap, std::vector<VertexMap> *vertexMaps)
 {
+	std::set<int> cycle;
 	std::map<int, int> Oedges;
 	std::map<int, int> Xedges;
 	/*std::map<int, int>::iterator it;
@@ -124,7 +125,7 @@ std::set<int> *verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *
 					{
 						if (bondValue(pMolEduct[e]) > bondValue(pMolProduct[ep]))
 						{
-							return;
+							return std::set<int> ret;
 						}
 					}
 				}
@@ -164,7 +165,7 @@ std::set<int> *verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *
 					{
 						if (bondValue(pMolProduct[e]) > bondValue(pMolEduct[ep]))
 						{
-							return;
+							return std::set<int> ret;
 						}
 					}
 				}
@@ -207,7 +208,7 @@ std::set<int> *verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *
 		{
 			if (Xedges.find(current) == Xedges.end())
 			{
-				return;
+				return std::set<int> ret;
 			}
 			tmp = Xedges.find(current)->second;
 			Xedges.erase(current);
@@ -218,7 +219,7 @@ std::set<int> *verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *
 		{
 			if (Oedges.find(current) == Oedges.end())
 			{
-				return;
+				return std::set<int> ret;
 			}
 			tmp = Oedges.find(current)->second;
 			Oedges.erase(current);
@@ -233,7 +234,9 @@ std::set<int> *verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *
 	{
 		//std::cout << "valid mapping" << std::endl;
 		validMap(&cycle, EtoP, gEduct, gProduct, vertexMap, vertexMaps);
+		return cycle;
 	}
+	return std::set<int> ret;
 }
 
 template <typename AutoTypes>
