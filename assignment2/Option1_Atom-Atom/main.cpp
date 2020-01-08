@@ -414,8 +414,8 @@ std::unique_ptr<mod::lib::Rules::Real> createRule(const VertexMap &vertexMap,
 
 	return std::make_unique<mod::lib::Rules::Real>(std::move(dpoRule), boost::none);
 }
-
-void validMap(std::set<int> cycle, std::map<int, int> *EtoP, gt gEduct, gt gProduct){
+template <typename gt>
+void validMap(std::set<int> *cycle, std::map<int, int> *EtoP, gt gEduct, gt gProduct){
 	std::set<int>::iterator it;
 	std::vector<VertexMap> vertexMaps;
 	VertexMap vertexMap;
@@ -424,7 +424,7 @@ void validMap(std::set<int> cycle, std::map<int, int> *EtoP, gt gEduct, gt gProd
 					VertexMap::value_type(getVertexFromId(idEduct, gEduct), getVertexFromId(idProduct, gProduct)));
 		};
 	for(it = cycle.begin(); it != cycle.end(); ++it ){
-		setById(*it, EtoP.find(*it)->second);
+		setById(*it, EtoP->find(*it)->second);
 		
 	}
 	vertexMaps.push_back(vertexMap);
