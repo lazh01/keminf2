@@ -72,7 +72,7 @@ void validMap(std::set<int> *cycle, std::map<int, int> *EtoP, ChemGraph gEduct, 
 	vertexMaps.push_back(vertexMap);
 	vertexMap.clear();
 }
-
+/*
 template<typename Edge>
 int edgeValue(Edge edge, molList pMol){
 	if(pMol[edge] == '-'){
@@ -83,7 +83,7 @@ int edgeValue(Edge edge, molList pMol){
 		return 3;
 	}
 }
-
+*/
 template <typename ChemGraph>
 void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std::map<int, int> *PtoE, molList pMolEduct, molList pMolProduct){
 	std::map<int, int> Oedges;
@@ -101,8 +101,8 @@ void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std:
 			for(const auto ep : asRange(out_edges(getVertexFromId(EtoP->find(vId)->second, gProduct), gProduct))) {
 				const auto tp = target(ep, gProduct);
 				if(PtoE->find(getVertexId(tp, gProduct))->second == getVertexId(t, gEduct)){
-					std::cout << edgeValue(e, pMolEduct) << "\t\"" << edgeValue(ep, pMolProduct) << "\"" << std::endl;
-					if( edgeValue(e, pMolEduct) < edgeValue(ep, pMolProduct)){
+					std::cout << bondValue(pMolEduct[e]) << "\t\"" << bondValue(pMolProduct[ep]) << "\"" << std::endl;
+					if( bondValue(pMolEduct[e]) < edgeValue(pMolProduct[ep])){
 						Oedges.erase(vId);
 					}
 				}
@@ -123,7 +123,7 @@ void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std:
 			for(const auto ep : asRange(out_edges(getVertexFromId(PtoE->find(vId)->second, gEduct), gEduct))) {
 				const auto tp = target(ep, gEduct);
 				if(PtoE->find(getVertexId(tp, gEduct))->second == getVertexId(t, gProduct)){
-					if( edgeValue(e, pMolProduct) < edgeValue(ep, pMolEduct)){
+					if( edgeValue(pMolProduct[e]) < edgeValue(pMolEduct[ep])){
 						Xedges.erase(PtoE->find(vId)->second);
 					}
 				}
