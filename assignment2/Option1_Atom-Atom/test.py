@@ -22,14 +22,17 @@ doStuff = _doStuff
 
 #g1 = smiles("OCC=O")
 #g2 = smiles("OC=CO")
-g1 = smiles("O")
-g2 = smiles("Cl")
-g3 = smiles("CC(=O)OCC")
+g1 = smiles("C=C")
+g2 = smiles("C=C")
+g3 = smiles("C1CCC1")
 g4 = smiles("Cl")
 g5 = smiles("OCC")
 g6 = smiles("CC(=O)O")
-c = 6
+c = 4
 k = 0
-res = doStuff([g1, g2, g3], [g4, g5, g6], c, k)
+
+ge = smiles("C1(O)C(O)C(O)C(O)1")
+gp = smiles("C1(O)C(O)C(O)C(O)1")
+res = doStuff([g1, g2], [g3], c, k)
 for a in res:
 	a.print()

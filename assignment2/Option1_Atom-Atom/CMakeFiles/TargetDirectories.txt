@@ -1,8 +1,0 @@
-/home/selar16/keminf2/keminf2/assignment2/Option1_Atom-Atom/CMakeFiles/install/strip.dir
-/home/selar16/keminf2/keminf2/assignment2/Option1_Atom-Atom/CMakeFiles/install/local.dir
-/home/selar16/keminf2/keminf2/assignment2/Option1_Atom-Atom/CMakeFiles/pydoStuff.dir
-/home/selar16/keminf2/keminf2/assignment2/Option1_Atom-Atom/CMakeFiles/doStuff.dir
-/home/selar16/keminf2/keminf2/assignment2/Option1_Atom-Atom/CMakeFiles/edit_cache.dir
-/home/selar16/keminf2/keminf2/assignment2/Option1_Atom-Atom/CMakeFiles/rebuild_cache.dir
-/home/selar16/keminf2/keminf2/assignment2/Option1_Atom-Atom/CMakeFiles/list_install_components.dir
-/home/selar16/keminf2/keminf2/assignment2/Option1_Atom-Atom/CMakeFiles/install.dir
