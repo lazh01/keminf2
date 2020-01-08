@@ -13,6 +13,7 @@
 #include <iostream>
 #include <map>
 #include <iterator>
+#include <typeinfo>
 
 // import asRange which wraps a std::pair of iterators with a proxy class
 // to enable ADL of begin() and end(), so it can be used with ranged-based for loops
@@ -249,7 +250,7 @@ void Permutate(AutoTypes gEduct, AutoTypes gProduct, std::map<int, int> *EtoP, s
 		//Finds unmapped vertex from educt and maps it to an unmapped vertex from product with the same atom symbol
 		for (const auto v : asRange(vertices(gEduct)))
 		{	
-			typeid(v)->name();
+			std::cout << typeid(v)->name() << std::endl;
 			if (EtoP->find(getVertexId(v, gEduct)) == EtoP->end())
 			{
 				for (const auto j : asRange(vertices(gProduct)))
