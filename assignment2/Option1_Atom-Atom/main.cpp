@@ -158,7 +158,7 @@ void Permutate(AutoTypes gEduct, AutoTypes gProduct, std::map<int, int> *EtoP, s
 		for(const auto v : asRange(vertices(gEduct))){
 			if(EtoP->find(getVertexId(v, gEduct)) == EtoP->end()){
 				for(const auto j : asRange(vertices(gProduct))) {
-					if(pMolEduct[v] == pMolProduct[j] && PtoE->find(j) == PtoE->end()){
+					if((pMolEduct[v] == pMolProduct[j]) && (PtoE->find(getVertexId(j, gProduct)) == PtoE->end())){
 						std::cout << pMolProduct[j] << "\t\"" << pMolEduct[v] << "\"" << std::endl;
 						EtoP->insert(std::pair<int, int>(getVertexId(v, gEduct), getVertexId(j, gProduct)));
 						PtoE->insert(std::pair<int, int>(getVertexId(j, gProduct), getVertexId(v, gEduct)));
