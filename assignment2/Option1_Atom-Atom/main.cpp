@@ -29,6 +29,7 @@ using BondType = mod::BondType;
 using PropString = mod::lib::Graph::LabelledGraph::PropStringType;
 using MolView = mod::lib::Graph::PropMolecule;
 using molList = mod::lib::detail::UnionPropMolecule<mod::lib::Graph::LabelledGraph>;
+using edgeDisc = jla_boost::union_graph<jla_boost::EdgeIndexedAdjacencyList<boost::undirectedS> >::edge_descriptor;
 using mod::lib::Chem::bondToChar;
 
 std::unique_ptr<mod::lib::Rules::Real> createRule(const VertexMap &vertexMap,
@@ -72,8 +73,18 @@ void validMap(std::set<int> *cycle, std::map<int, int> *EtoP, ChemGraph gEduct, 
 	vertexMap.clear();
 }
 
+int edgeValue(edgeDisc *edge,, molList *pMol){
+	if(pMolEduct[eductEdge] == '-'){
+		return 1;
+	} else if(pMolEduct[eductEdge] == '='){
+		return 2;
+	} else{
+		return 3;
+	}
+}
+
 template <typename ChemGraph>
-void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std::map<int, int> *PtoE){
+void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std::map<int, int> *PtoE, molList *pMolEduct, molList *pMolProduct){
 	std::map<int, int> Oedges;
 	std::map<int, int> Xedges;
 	std::cout << "here" << std::endl;
@@ -89,8 +100,8 @@ void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std:
 			for(const auto ep : asRange(out_edges(getVertexFromId(EtoP->find(vId)->second, gProduct), gProduct))) {
 				const auto tp = target(ep, gProduct);
 				if(PtoE->find(getVertexId(tp, gProduct))->second == getVertexId(t, gEduct)){
-					std::cout << bondValue(e) << "\t\"" << bondValue(ep) << "\"" << std::endl;
-					if( bondValue(e) < bondValue(ep)){
+					std::cout << edgeValue(e, pMolEduct) << "\t\"" << edgeValue(ep, pMolProduct) << "\"" << std::endl;
+					if( edgeValue(e, pMolEduct) < edgeValue(ep, pMolProduct)){
 						Oedges.erase(vId);
 					}
 				}
@@ -111,7 +122,7 @@ void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std:
 			for(const auto ep : asRange(out_edges(getVertexFromId(PtoE->find(vId)->second, gEduct), gEduct))) {
 				const auto tp = target(ep, gEduct);
 				if(PtoE->find(getVertexId(tp, gEduct))->second == getVertexId(t, gProduct)){
-					if( bondValue(e) < bondValue(ep)){
+					if( edgeValue(e, pMolProduct) < edgeValue(ep, pMolEduct)){
 						Xedges.erase(PtoE->find(vId)->second);
 					}
 				}
