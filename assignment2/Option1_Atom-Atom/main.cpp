@@ -175,7 +175,7 @@ void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std:
 			else
 			{
 				Xedges.insert(std::pair<int, int>(vId, PtoE->find(getVertexId(t, gProduct))->second));
-				for (const auto ep : asRange(out_edges(getVertexFromId(PtoE->find(vId)->second, gEduct), gEduct)))
+				for (const auto ep : asRange(out_edges(getVertexFromId(vId, gEduct), gEduct)))
 				{
 					const auto tp = target(ep, gEduct);
 					if (EtoP->find(getVertexId(tp, gEduct))->second == getVertexId(t, gProduct))
@@ -202,7 +202,6 @@ void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std:
 	Oedges.erase(current);
 	int count = 1;
 	std::set<int> cycle;
-	std::cout << first;
 	while ((Xedges.size() != 0) || (Oedges.size() != 0))
 	{
 		std::cout << "," << current;
@@ -231,7 +230,6 @@ void verify(ChemGraph gEduct, ChemGraph gProduct, std::map<int, int> *EtoP, std:
 		cycle.insert(current);
 		count = count + 1;
 	}
-	std::cout << std::endl;
 
 	if (first == current)
 	{
